@@ -1,0 +1,614 @@
+{
+  "title": "Privacy Policy",
+  "lead": null,
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "1. Introduction"
+    },
+    {
+      "type": "para",
+      "text": "Welcome to BlakTickets. Your privacy is important to us, and we are committed to protecting the personal information you share while using our website and mobile application. This Privacy Policy explains how we collect, use, store, protect, and disclose your information when you access our services. By using BlakTickets, you agree to the practices described in this Privacy Policy. If you do not agree with this Policy, please discontinue the use of our services."
+    },
+    {
+      "type": "heading",
+      "text": "2. About BlakTickets"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets is an event ticket booking, event discovery, and event management platform that connects customers, event organizers, vendors, and partners across India. Users can discover events, create and manage events, purchase tickets, receive refunds where applicable, communicate with organizers, and use ticket scanning services. We aim to provide a secure, transparent, and reliable platform while respecting the privacy of every user. This Privacy Policy applies to all services offered through the BlakTickets website and mobile application."
+    },
+    {
+      "type": "heading",
+      "text": "3. Information We Collect"
+    },
+    {
+      "type": "para",
+      "text": "We collect information that helps us provide and improve our services. Depending on how you use BlakTickets, we may collect your name, mobile number, email address, date of birth, profile photograph, location information, device information, and payment-related details. Event organizers may also be required to provide government-issued identification for verification purposes. We collect only the information necessary to operate our services and comply with applicable laws."
+    },
+    {
+      "type": "para",
+      "text": "We may collect:"
+    },
+    {
+      "type": "para",
+      "text": "Name Mobile Number Email Address Date of Birth Profile Photo Location Information Device Information Payment Information Government ID (Event Organizers only) Event Preferences and Booking History"
+    },
+    {
+      "type": "heading",
+      "text": "4. How We Collect Information"
+    },
+    {
+      "type": "para",
+      "text": "We collect information directly from you when you register an account, purchase tickets, create events, contact customer support, or participate in promotions. We may also collect information automatically through cookies, device technologies, and analytics tools when you use our services. Users may sign in using Mobile OTP, Email, Google, Apple, Facebook, or other supported authentication methods. The information collected depends on the sign-in method selected by the user."
+    },
+    {
+      "type": "heading",
+      "text": "5. How We Use Your Information"
+    },
+    {
+      "type": "para",
+      "text": "We use your personal information to provide, operate, and improve the BlakTickets platform. Your information helps us verify your identity, process ticket bookings, manage events, facilitate secure payments, provide customer support, and personalize your experience. We also use your information to communicate important updates, prevent fraud, comply with legal obligations, and enhance the security and reliability of our services. We do not sell your personal information to third parties for marketing purposes."
+    },
+    {
+      "type": "heading",
+      "text": "6. Payment Information"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets supports multiple payment methods, including UPI, Credit Cards, Debit Cards, Net Banking, Wallets, and other supported payment options. Payment transactions are processed through trusted payment gateway providers using secure encryption technologies. BlakTickets does not store your complete card details, CVV, PIN, or banking passwords on its servers. Payment information is shared only with authorized payment processors to complete your transaction securely."
+    },
+    {
+      "type": "heading",
+      "text": "7. Sharing of Information"
+    },
+    {
+      "type": "para",
+      "text": "We respect your privacy and do not sell, rent, or share your personal information with advertisers, marketing agencies, or unrelated third parties. We only share limited information with trusted payment gateway providers for payment processing and with service providers that help us operate the platform. Information may also be shared when required by law, court order, or government authority. Any sharing of information is limited to what is necessary for providing our services or complying with legal obligations."
+    },
+    {
+      "type": "heading",
+      "text": "8. Data Security"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets uses reasonable administrative, technical, and physical security measures to protect your personal information from unauthorized access, misuse, alteration, disclosure, or destruction. We continuously monitor our systems to improve security and reduce risks. While we strive to protect your data, no internet transmission or electronic storage system can be guaranteed to be completely secure. Users are also responsible for maintaining the confidentiality of their account credentials."
+    },
+    {
+      "type": "heading",
+      "text": "9. Data Retention"
+    },
+    {
+      "type": "para",
+      "text": "We retain your personal information only for as long as it is necessary to provide our services, comply with applicable laws, resolve disputes, enforce our agreements, and maintain business records. When your information is no longer required, we will securely delete, anonymize, or archive it in accordance with applicable legal requirements. Certain records may be retained for longer periods where required by law or for legitimate business purposes."
+    },
+    {
+      "type": "heading",
+      "text": "10. Cookies and Similar Technologies"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets uses cookies and similar technologies to improve user experience, remember your preferences, maintain login sessions, analyze platform performance, and enhance security. Cookies help us understand how users interact with our website and application so we can continuously improve our services. You may choose to disable cookies through your browser or device settings; however, doing so may affect certain features or functionality of the platform."
+    },
+    {
+      "type": "heading",
+      "text": "11. User Rights"
+    },
+    {
+      "type": "para",
+      "text": "Users of BlakTickets have the right to access, update, correct, or delete their personal information by accessing their account settings or contacting support. You may also request details about the data we hold about you and how it is being used. Where applicable under law, you can request restriction of processing or object to certain uses of your data. We will respond to such requests within a reasonable timeframe, subject to identity verification and legal requirements."
+    },
+    {
+      "type": "heading",
+      "text": "12. Event Organizers & Partners"
+    },
+    {
+      "type": "para",
+      "text": "Event organizers using BlakTickets may be required to provide additional information such as business details and government identification for verification purposes. Organizers are responsible for the accuracy of event information they publish on the platform. BlakTickets does not take responsibility for the quality, safety, or execution of events listed by thirdparty organizers. However, we may remove or suspend listings that violate our policies or applicable laws."
+    },
+    {
+      "type": "heading",
+      "text": "13. Age Restrictions"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets services are intended for users aged 13 years and above. Users aged 13–17 will be provided access to age-appropriate content and events only, and certain features may be restricted based on legal requirements. Users under 18 may require parental guidance for certain transactions or events. We do not knowingly collect personal information from children below the permitted age without appropriate consent where required by law."
+    },
+    {
+      "type": "heading",
+      "text": "14. Third-Party Services"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets may integrate with third-party services such as payment gateways, analytics providers, cloud hosting services, and authentication platforms. These third parties may process limited data strictly for providing their services to us. We ensure that such partners follow appropriate security and confidentiality standards. However, we are not responsible for the privacy practices of external websites or services linked through our platform."
+    },
+    {
+      "type": "heading",
+      "text": "15. Data Security Limitations"
+    },
+    {
+      "type": "para",
+      "text": "While we use industry-standard security measures to protect your data, no system can guarantee absolute security. Users acknowledge that they share information at their own risk. We recommend users maintain strong passwords, avoid sharing account credentials, and log out after using shared devices to enhance account security."
+    },
+    {
+      "type": "heading",
+      "text": "16. Changes to This Privacy Policy"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets may update this Privacy Policy from time to time to reflect changes in technology, legal requirements, or business practices. Any updates will be posted on our platform, and continued use of the services after such updates will be considered acceptance of the revised policy. We encourage users to review this page periodically to stay informed."
+    },
+    {
+      "type": "heading",
+      "text": "17. Contact Information"
+    },
+    {
+      "type": "para",
+      "text": "If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, you may contact us using the details below:"
+    },
+    {
+      "type": "para",
+      "text": "Email: blakticketssupport@gmail.com Phone: +91 6300844129 Location: Bangalore, Karnataka, India"
+    },
+    {
+      "type": "para",
+      "text": "We aim to respond to all privacy-related queries within a reasonable timeframe."
+    },
+    {
+      "type": "heading",
+      "text": "18. Transaction and Refund Policy Reference"
+    },
+    {
+      "type": "para",
+      "text": "All ticket purchases made on BlakTickets are considered final unless otherwise stated by the event organizer or applicable law. Refund eligibility, cancellation rules, and rescheduling policies are defined by the respective event organizers and may vary from event to event. BlakTickets only facilitates transactions and does not independently guarantee refunds unless explicitly stated. In case of failed transactions or duplicate payments, users may request support for resolution based on payment gateway confirmation."
+    },
+    {
+      "type": "heading",
+      "text": "19. Limitation of Liability"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets acts as a platform connecting users and event organizers and is not responsible for the conduct, quality, safety, or execution of any event listed on the platform. We are not liable for any direct, indirect, incidental, or consequential damages arising from event cancellations, delays, injuries, or dissatisfaction with events. Users participate in events at their own discretion and risk, subject to applicable laws."
+    },
+    {
+      "type": "heading",
+      "text": "20. Prohibited Activities"
+    },
+    {
+      "type": "para",
+      "text": "Users agree not to misuse the BlakTickets platform for fraudulent, illegal, or harmful activities. This includes unauthorized ticket resale, fake event listings, impersonation, hacking attempts, or interference with platform operations. Any violation may result in account suspension, termination, and legal action where necessary. We reserve the right to investigate and take appropriate action against suspicious or abusive behavior."
+    },
+    {
+      "type": "heading",
+      "text": "21. Account Suspension and Termination"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets reserves the right to suspend or terminate user accounts if we detect violations of our terms, suspicious activity, fraud, or misuse of the platform. Users may also choose to delete their accounts at any time through account settings or by contacting support. Upon termination, certain data may be retained as required by law or for legitimate business purposes."
+    },
+    {
+      "type": "heading",
+      "text": "22. Cross-Border Data Handling"
+    },
+    {
+      "type": "para",
+      "text": "Although BlakTickets currently operates in India, some data may be processed or stored using cloud infrastructure located outside India. By using the platform, you consent to such limited cross-border data transfers strictly for operational and technical purposes. We ensure appropriate safeguards are in place to protect your data regardless of location."
+    },
+    {
+      "type": "heading",
+      "text": "23. Consent"
+    },
+    {
+      "type": "para",
+      "text": "By accessing or using BlakTickets, you explicitly consent to the collection, use, processing, and storage of your information as described in this Privacy Policy. If you do not agree with any part of this policy, you should discontinue using the platform immediately. Continued use of the platform indicates acceptance of the updated terms and practices."
+    },
+    {
+      "type": "heading",
+      "text": "24. Policy Ownership and Updates Responsibility"
+    },
+    {
+      "type": "para",
+      "text": "This Privacy Policy is maintained and governed by BlakTickets as a digital platform operating from Bangalore, Karnataka, India. Updates may be made periodically to reflect operational, legal, or technological changes. It is the user's responsibility to stay informed about any changes made to this policy."
+    },
+    {
+      "type": "heading",
+      "text": "25. Data Accuracy Responsibility"
+    },
+    {
+      "type": "para",
+      "text": "Users are responsible for ensuring that the personal information they provide on BlakTickets is accurate, complete, and up to date. Incorrect or outdated information may affect ticket delivery, refunds, event access, or account verification. BlakTickets is not liable for issues arising from inaccurate user-provided data."
+    },
+    {
+      "type": "heading",
+      "text": "26. Communications and Notifications"
+    },
+    {
+      "type": "para",
+      "text": "By using BlakTickets, users agree to receive transactional communications such as booking confirmations, OTPs, updates, and service notifications via SMS, email, or in-app alerts. Users may also receive important service announcements related to security, policy updates, or account activity."
+    },
+    {
+      "type": "heading",
+      "text": "27. Marketing Communications"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets may send promotional messages or offers related to events, depending on user preferences and consent settings. Users can opt out of marketing communications at any time using provided unsubscribe options. However, transactional and security-related messages cannot be disabled."
+    },
+    {
+      "type": "heading",
+      "text": "28. Analytics and Platform Improvement"
+    },
+    {
+      "type": "para",
+      "text": "We use analytics tools to understand user behavior, improve app performance, and enhance user experience. This may include aggregated and anonymized data such as click patterns, session duration, and navigation flow. This data does not personally identify users."
+    },
+    {
+      "type": "heading",
+      "text": "29. Device Permissions"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets may request access to device features such as location, camera, or storage to enable core functionalities like ticket scanning, event discovery, or uploading documents. Users can manage or revoke these permissions through device settings, but some features may not function properly without them."
+    },
+    {
+      "type": "heading",
+      "text": "30. Ticket Ownership and Validity"
+    },
+    {
+      "type": "para",
+      "text": "Tickets purchased through BlakTickets remain valid only under the terms set by the respective event organizers. Digital tickets may include QR codes or unique identifiers and must not be copied, duplicated, or tampered with. Any fraudulent use of tickets may result in denial of entry and legal action."
+    },
+    {
+      "type": "heading",
+      "text": "31. Fraud Prevention and Monitoring"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets actively monitors transactions and platform activity to detect fraud, abuse, or suspicious behavior. We reserve the right to flag, review, or block transactions that appear unusual or risky. Users may be required to undergo additional verification in such cases."
+    },
+    {
+      "type": "heading",
+      "text": "32. Force Majeure"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets is not responsible for failure or delay in service caused by events beyond our reasonable control, including natural disasters, technical failures, internet outages, government actions, pandemics, or other unforeseen circumstances affecting platform operations or events."
+    },
+    {
+      "type": "heading",
+      "text": "33. Governing Law"
+    },
+    {
+      "type": "para",
+      "text": "This Privacy Policy shall be governed by and interpreted in accordance with the laws of India. Any disputes arising from the use of BlakTickets shall be subject to the jurisdiction of competent courts located in Bangalore, Karnataka."
+    },
+    {
+      "type": "heading",
+      "text": "34. Severability"
+    },
+    {
+      "type": "para",
+      "text": "If any provision of this Privacy Policy is found to be invalid or unenforceable under applicable law, the remaining provisions shall continue in full force and effect. This ensures that the policy remains legally operational even if one section is challenged."
+    },
+    {
+      "type": "heading",
+      "text": "35. Data Minimization Principle"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets collects only the minimum amount of personal data required to operate the platform effectively. We avoid collecting unnecessary sensitive information and ensure that all data collection is purpose-specific and relevant to user interaction."
+    },
+    {
+      "type": "heading",
+      "text": "36. Purpose Limitation"
+    },
+    {
+      "type": "para",
+      "text": "Personal data collected from users is used only for the purposes explicitly stated in this Privacy Policy, including ticket booking, event management, payment processing, and customer support. We do not repurpose data for unrelated or undisclosed activities."
+    },
+    {
+      "type": "heading",
+      "text": "37. Anonymized Data Usage"
+    },
+    {
+      "type": "para",
+      "text": "We may convert personal data into anonymized or aggregated datasets for analytical, statistical, and operational improvements. Such anonymized data cannot be used to identify any individual user."
+    },
+    {
+      "type": "heading",
+      "text": "38. Security Breach Notification"
+    },
+    {
+      "type": "para",
+      "text": "In the unlikely event of a data breach that affects user information, BlakTickets will take immediate steps to contain the issue and notify affected users as required by applicable law. We will also cooperate with relevant authorities when necessary."
+    },
+    {
+      "type": "heading",
+      "text": "39. User Consent Withdrawal"
+    },
+    {
+      "type": "para",
+      "text": "Users may withdraw their consent for data processing at any time by discontinuing use of the platform or contacting support. However, withdrawal of consent may limit access to certain features or services."
+    },
+    {
+      "type": "heading",
+      "text": "40. External Links Disclaimer"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets may contain links to third-party websites or event pages. We are not responsible for the privacy practices, content, or policies of external websites, and users are encouraged to review their terms separately."
+    },
+    {
+      "type": "heading",
+      "text": "41. Service Availability and Data Access"
+    },
+    {
+      "type": "para",
+      "text": "We do not guarantee uninterrupted access to the platform. Temporary downtime or maintenance may affect access to user data or services, and BlakTickets shall not be held liable for such interruptions."
+    },
+    {
+      "type": "heading",
+      "text": "42. Compliance with Legal Requests"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets may disclose user information if required to do so by law, regulation, court order, or government request. Such disclosures will be limited strictly to what is legally necessary."
+    },
+    {
+      "type": "heading",
+      "text": "43. Account Recovery Responsibility"
+    },
+    {
+      "type": "para",
+      "text": "Users are responsible for maintaining secure access to their accounts. BlakTickets is not liable for unauthorized access resulting from weak passwords, device compromise, or sharing of login credentials."
+    },
+    {
+      "type": "heading",
+      "text": "44. Policy Interpretation"
+    },
+    {
+      "type": "para",
+      "text": "Any ambiguity in this Privacy Policy shall be interpreted in a manner that aligns with applicable Indian laws and industry-standard practices for digital platforms and event ticketing services."
+    },
+    {
+      "type": "heading",
+      "text": "45. No Warranty of Absolute Privacy"
+    },
+    {
+      "type": "para",
+      "text": "While BlakTickets implements strong security practices, we do not guarantee absolute protection of user data due to inherent risks in internet-based systems. Users acknowledge and accept this limitation when using the platform."
+    },
+    {
+      "type": "heading",
+      "text": "46. Data Processing Location"
+    },
+    {
+      "type": "para",
+      "text": "User data may be processed in secure servers located within India or other jurisdictions where our service providers operate. All such processing is done under strict confidentiality and security obligations."
+    },
+    {
+      "type": "heading",
+      "text": "47. Role of BlakTickets as Intermediary"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets acts solely as an intermediary platform connecting users and event organizers. We do not control or guarantee the policies, actions, or data handling practices of individual event organizers beyond platform requirements."
+    },
+    {
+      "type": "heading",
+      "text": "48. Event-Specific Data Sharing"
+    },
+    {
+      "type": "para",
+      "text": "Limited user data may be shared with event organizers only to the extent necessary for ticket verification, entry validation, and event coordination. Organizers are required to handle such data responsibly."
+    },
+    {
+      "type": "heading",
+      "text": "49. Consent for Platform Optimization"
+    },
+    {
+      "type": "para",
+      "text": "By using BlakTickets, users consent to the use of performance and interaction data to improve app functionality, optimize user experience, and enhance system reliability."
+    },
+    {
+      "type": "heading",
+      "text": "50. Retention for Legal Protection"
+    },
+    {
+      "type": "para",
+      "text": "We may retain certain user data beyond account deletion where necessary to comply with legal obligations, resolve disputes, prevent fraud, or enforce agreements."
+    },
+    {
+      "type": "heading",
+      "text": "51. Intellectual Property Protection"
+    },
+    {
+      "type": "para",
+      "text": "All platform data structures, systems, designs, and proprietary technologies used in BlakTickets are protected under applicable intellectual property laws. Unauthorized use or copying is prohibited."
+    },
+    {
+      "type": "heading",
+      "text": "52. User Responsibility for Event Conduct"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets is not responsible for user behavior at physical or virtual events. Users must comply with event rules, safety guidelines, and applicable laws while attending events."
+    },
+    {
+      "type": "heading",
+      "text": "53. Modification of Services"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets reserves the right to modify, suspend, or discontinue any feature or service at any time without prior notice, provided such changes are necessary for operational, legal, or security reasons."
+    },
+    {
+      "type": "heading",
+      "text": "54. Entire Agreement Clause"
+    },
+    {
+      "type": "para",
+      "text": "This Privacy Policy, along with our Terms and Conditions, constitutes the entire agreement between users and BlakTickets regarding data privacy and supersedes any prior informal communications or understandings."
+    },
+    {
+      "type": "heading",
+      "text": "55. Data Access Logs"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets may maintain internal logs of user activity, access attempts, and system interactions for security, fraud prevention, and debugging purposes. These logs are retained for a limited period and are protected from unauthorized access."
+    },
+    {
+      "type": "heading",
+      "text": "56. Identity Verification"
+    },
+    {
+      "type": "para",
+      "text": "For certain transactions or organizer accounts, BlakTickets may require identity verification to ensure platform integrity. Failure to provide required verification may result in restricted access or account suspension."
+    },
+    {
+      "type": "heading",
+      "text": "57. Dispute Resolution Data Use"
+    },
+    {
+      "type": "para",
+      "text": "In case of disputes between users and event organizers, relevant user data may be used strictly for resolution purposes. BlakTickets may act as a facilitator but not as a legal arbitrator between parties."
+    },
+    {
+      "type": "heading",
+      "text": "58. Platform Integrity Monitoring"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets continuously monitors system usage patterns to detect abuse, bot activity, or unauthorized automation. Any violation may result in immediate restriction or permanent ban of accounts."
+    },
+    {
+      "type": "heading",
+      "text": "59. Feedback and User Submissions"
+    },
+    {
+      "type": "para",
+      "text": "Any feedback, suggestions, or ideas submitted by users may be used by BlakTickets without obligation, compensation, or restriction. Such submissions may be used to improve platform features and services."
+    },
+    {
+      "type": "heading",
+      "text": "60. Regional Compliance"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets complies with applicable data protection and digital service regulations under Indian law. If regulations change, we may update our practices to remain compliant without prior individual consent."
+    },
+    {
+      "type": "heading",
+      "text": "61. Non-Transfer of Accounts"
+    },
+    {
+      "type": "para",
+      "text": "User accounts on BlakTickets are personal and non-transferable. Users may not sell, assign, or transfer their account access to any other individual or entity."
+    },
+    {
+      "type": "heading",
+      "text": "62. Service Prioritization Rights"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets reserves the right to prioritize system resources, features, or services for operational efficiency, security, or high-demand events without guaranteeing equal availability at all times."
+    },
+    {
+      "type": "heading",
+      "text": "63. Technical Errors Disclaimer"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets is not responsible for technical errors such as server downtime, payment gateway delays, or system glitches that may temporarily affect bookings, ticket generation, or access."
+    },
+    {
+      "type": "heading",
+      "text": "64. Survival Clause"
+    },
+    {
+      "type": "para",
+      "text": "Certain provisions of this Privacy Policy, including data retention, liability limitations, and dispute-related clauses, shall survive even after account deletion or termination of services."
+    },
+    {
+      "type": "heading",
+      "text": "65. Data Access Limitation"
+    },
+    {
+      "type": "para",
+      "text": "Access to personal data within BlakTickets is strictly restricted to authorized personnel who require such access for operational, technical, or legal purposes. Unauthorized access is prohibited and monitored."
+    },
+    {
+      "type": "heading",
+      "text": "66. Audit and Compliance Checks"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets may periodically conduct internal audits and compliance checks to ensure adherence to privacy standards, security practices, and applicable legal requirements."
+    },
+    {
+      "type": "heading",
+      "text": "67. Incident Response Policy"
+    },
+    {
+      "type": "para",
+      "text": "In the event of a security incident, BlakTickets will follow a structured response process including identification, containment, mitigation, and post-incident review to minimize impact on users."
+    },
+    {
+      "type": "heading",
+      "text": "68. Data Integrity Assurance"
+    },
+    {
+      "type": "para",
+      "text": "We take reasonable measures to ensure that user data stored on our systems remains accurate, consistent, and protected from unauthorized modification or corruption."
+    },
+    {
+      "type": "heading",
+      "text": "69. Service Usage Analytics"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets may use aggregated usage analytics to understand platform performance, detect bottlenecks, and improve scalability for high-traffic events."
+    },
+    {
+      "type": "heading",
+      "text": "70. Third-Party Integration Control"
+    },
+    {
+      "type": "para",
+      "text": "Any third-party integrations used by BlakTickets are evaluated for security and compliance standards. However, their independent privacy practices remain outside our direct control."
+    },
+    {
+      "type": "heading",
+      "text": "71. User Notification Priority"
+    },
+    {
+      "type": "para",
+      "text": "Important account or security-related notifications will always be prioritized over promotional messages to ensure users are informed of critical updates in a timely manner."
+    },
+    {
+      "type": "heading",
+      "text": "72. Account Activity Responsibility"
+    },
+    {
+      "type": "para",
+      "text": "Users are fully responsible for all activities performed under their account. Any unauthorized activity must be reported immediately to support for mitigation."
+    },
+    {
+      "type": "heading",
+      "text": "73. Legal Enforcement Cooperation"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets will cooperate with law enforcement agencies and regulatory authorities when required under applicable law to investigate illegal or harmful activity."
+    },
+    {
+      "type": "heading",
+      "text": "74. Policy Interpretation Authority"
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets reserves the final authority to interpret this Privacy Policy in cases of ambiguity, provided such interpretation remains consistent with applicable law and fair use principles."
+    }
+  ]
+}

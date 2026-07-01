@@ -1,0 +1,128 @@
+{
+  "title": "Press Room",
+  "lead": "Welcome to the BLAK Tickets Press Room",
+  "blocks": [
+    {
+      "type": "para",
+      "text": "Welcome to the official Press Room of BLAK Tickets. This is the central destination for journalists, media professionals, bloggers, creators, and industry partners looking for the latest news, announcements, company information, and media resources."
+    },
+    {
+      "type": "para",
+      "text": "BLAK Tickets is building the next generation of event discovery and ticketing, connecting people with concerts, festivals, sports, conferences, comedy shows, cultural experiences, and exclusive live events through a seamless, technology-driven platform. Our mission is to make discovering and attending unforgettable experiences easier, smarter, and more secure for everyone."
+    },
+    {
+      "type": "para",
+      "text": "As we continue to expand, innovate, and collaborate with organizers, artists, venues, and brands, we remain committed to transparent communication with the media and our community."
+    },
+    { "type": "heading", "text": "Latest News" },
+    {
+      "type": "para",
+      "text": "Stay up to date with our newest announcements, product launches, partnerships, feature releases, funding updates, and company milestones."
+    },
+    { "type": "para", "text": "Examples of future announcements include:" },
+    {
+      "type": "list",
+      "items": [
+        "Product launches and platform updates",
+        "Strategic partnerships",
+        "New city and country expansions",
+        "Feature releases",
+        "Event industry insights",
+        "Security and technology innovations",
+        "Creator and organizer collaborations",
+        "Company milestones",
+        "Awards and recognitions"
+      ]
+    },
+    { "type": "heading", "text": "About BLAK Tickets" },
+    {
+      "type": "para",
+      "text": "BLAK Tickets is a modern event discovery and ticketing platform that helps people discover, book, and experience live events effortlessly. Beyond ticket sales, the platform empowers event organizers with intelligent management tools, secure ticketing, audience insights, and marketing solutions while delivering a personalized and immersive experience for attendees."
+    },
+    {
+      "type": "para",
+      "text": "Our vision is to become one of the world's leading technology platforms for live experiences."
+    },
+    { "type": "heading", "text": "Media Resources" },
+    { "type": "para", "text": "Members of the media can request access to:" },
+    {
+      "type": "list",
+      "items": [
+        "Official company logo",
+        "Brand guidelines",
+        "Product screenshots",
+        "Mobile application visuals",
+        "Platform overview",
+        "Leadership biographies",
+        "Press kit",
+        "Brand assets",
+        "Company fact sheet",
+        "Product videos",
+        "Promotional media"
+      ]
+    },
+    {
+      "type": "para",
+      "text": "Please ensure all brand assets are used in accordance with our brand guidelines."
+    },
+    { "type": "heading", "text": "Media Coverage" },
+    {
+      "type": "para",
+      "text": "BLAK Tickets welcomes interviews, feature stories, podcasts, technology reviews, startup coverage, and event industry discussions."
+    },
+    { "type": "para", "text": "Topics we can speak about include:" },
+    {
+      "type": "list",
+      "items": [
+        "Event Technology",
+        "Digital Ticketing",
+        "Event Discovery",
+        "Artificial Intelligence",
+        "Startup Growth",
+        "Product Design",
+        "Consumer Technology",
+        "Experience Economy",
+        "Creator Economy",
+        "Entertainment Industry",
+        "Event Marketing",
+        "Future of Live Experiences"
+      ]
+    },
+    { "type": "heading", "text": "Company Facts" },
+    {
+      "type": "list",
+      "items": [
+        "Company Name — BLAK Tickets",
+        "Industry — Event Technology",
+        "Category — Event Discovery & Ticketing Platform",
+        "Founded — Coming Soon",
+        "Headquarters — Bengaluru, India",
+        "Services — Event Discovery, Ticket Booking, Event Management, Digital Ticketing, Organizer Solutions, Analytics, Event Promotion"
+      ]
+    },
+    { "type": "heading", "text": "Press Inquiries" },
+    {
+      "type": "para",
+      "text": "For media requests, interviews, partnership announcements, speaking opportunities, or press-related questions, please contact our communications team."
+    },
+    { "type": "list", "items": ["Email — press@blaktickets.com"] },
+    {
+      "type": "para",
+      "text": "We aim to respond to all legitimate media inquiries as quickly as possible."
+    },
+    { "type": "heading", "text": "Brand Mission" },
+    {
+      "type": "para",
+      "text": "At BLAK Tickets, we believe every event has the power to create unforgettable memories and meaningful connections. Our mission is to simplify the journey from discovering an event to experiencing it, using technology that is intuitive, secure, and designed around people."
+    },
+    { "type": "heading", "text": "Stay Connected" },
+    {
+      "type": "para",
+      "text": "Follow BLAK Tickets for the latest announcements, company news, product updates, and upcoming launches across our official social media channels."
+    },
+    {
+      "type": "para",
+      "text": "We appreciate the interest of journalists, creators, and media organizations in sharing our story as we continue building the future of live experiences."
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+.featured { padding-block: var(--s-15); }
+
+.feat-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-bottom: var(--s-6);
+}
+.feat-head .section-title { max-width: 18ch; }
+
+.feat-nav { display: flex; gap: 10px; flex-shrink: 0; }
+.feat-arrow {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  font-size: 18px;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  transition: all var(--dur) var(--ease);
+}
+.feat-arrow:hover:not(:disabled) {
+  border-color: var(--emerald);
+  background: var(--emerald);
+  color: #fff;
+  transform: translateY(-2px);
+}
+.feat-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ---- Track / rail ---- */
+.feat-track {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  cursor: grab;
+}
+.feat-track::-webkit-scrollbar { display: none; }
+.feat-track.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+
+.feat-rail {
+  display: flex;
+  gap: var(--gutter);
+  padding-inline: var(--margin);
+  padding-block: var(--s-2) var(--s-3);
+  width: max-content;
+}
+
+/* ---- Event card ---- */
+.ev-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 340px;
+  height: 500px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+  scroll-snap-align: start;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+.ev-card:hover {
+  transform: translateY(-12px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--emerald);
+}
+
+.ev-media {
+  position: relative;
+  height: 70%;
+  overflow: hidden;
+}
+.ev-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--ease);
+}
+.ev-card:hover .ev-media img { transform: scale(1.05); }
+.ev-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(24,24,24,0) 50%, rgba(24,24,24,0.35));
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.ev-card:hover .ev-overlay { opacity: 1; }
+
+.ev-badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 6px 11px;
+  border-radius: var(--r-pill);
+  background: rgba(24, 24, 24, 0.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.ev-badge--trending,
+.ev-badge--editorspick { background: rgba(15, 143, 115, 0.82); border-color: rgba(255,255,255,0.25); }
+.ev-badge--almostsoldout { background: rgba(180, 60, 40, 0.78); }
+
+.ev-body {
+  position: relative;
+  height: 30%;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ev-cat {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--emerald);
+}
+.ev-title {
+  font-size: 19px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.12;
+}
+.ev-where { font-size: 13px; color: var(--muted); }
+.ev-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+.ev-date { font-size: 12px; color: var(--body); }
+.ev-price {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* book button slides up on hover (always visible on touch) */
+.ev-book {
+  position: absolute;
+  left: 18px; right: 18px; bottom: 14px;
+  transform: translateY(140%);
+  opacity: 0;
+  transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+.ev-book .btn { width: 100%; }
+.ev-card:hover .ev-book { transform: none; opacity: 1; }
+.ev-card:hover .ev-foot { opacity: 0; transition: opacity var(--dur) var(--ease); }
+
+@media (hover: none) {
+  .ev-book { position: static; transform: none; opacity: 1; margin-top: 10px; }
+  .ev-card:hover .ev-foot { opacity: 1; }
+}
+
+.feat-cta { text-align: center; margin-top: var(--s-5); }
+
+@media (max-width: 640px) {
+  .feat-head { flex-direction: column; align-items: flex-start; }
+  .feat-nav { display: none; }
+  .ev-card { width: 78vw; height: 460px; }
+}

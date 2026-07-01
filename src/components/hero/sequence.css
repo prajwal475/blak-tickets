@@ -1,0 +1,70 @@
+/* ---- Full-bleed scroll-scrubbed booking sequence ---- */
+.seq {
+  position: relative;
+  height: 220vh;            /* long scroll distance => slow scrub */
+}
+.seq-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #d4cdc0;      /* fallback ~ the clip's warm studio backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* blurred ambient backdrop fills the full width seamlessly... */
+.seq-bg {
+  position: absolute;
+  inset: -8%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(54px) saturate(1.05) brightness(0.96);
+  transform: scale(1.12);
+  z-index: 0;
+}
+/* ...while the foreground shows the whole frame, never cropped/zoomed */
+.seq-canvas {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+.seq-cap {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 26px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: rgba(24, 24, 24, 0.55);
+  pointer-events: none;
+}
+
+/* reduced-motion: no pin/scrub — show a single representative frame */
+.seq--static {
+  height: auto;
+}
+.seq--static .seq-stage {
+  position: relative;
+  height: auto;
+  padding-block: var(--s-10);
+}
+.seq--static .seq-canvas {
+  width: min(320px, 72vw);
+  height: auto;
+  aspect-ratio: 800 / 1422;
+  border-radius: 28px;
+  box-shadow: var(--shadow-card);
+}
+
+@media (max-width: 640px) {
+  .seq { height: 200vh; }
+}

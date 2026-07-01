@@ -1,0 +1,86 @@
+/* ============================================================
+   BLAK TICKETS — Design tokens
+   Theme: White + Emerald, Swiss-clinical
+   ============================================================ */
+:root {
+  /* ---- Surfaces ---- */
+  --white: #ffffff;        /* primary background          */
+  --off-white: #f7f7f5;    /* secondary sections          */
+  --surface: #fafafa;      /* surface backgrounds         */
+  --card: #ffffff;         /* card face (with --line)     */
+  --card-alt: #efefef;     /* alternate card              */
+
+  /* ---- Ink / text ---- */
+  --ink: #181818;          /* headlines (charcoal)        */
+  --body: #4a4a4a;         /* body text                   */
+  --muted: #8e8e8e;        /* secondary text              */
+  --disabled: #c8c8c8;     /* disabled elements           */
+
+  /* ---- Lines ---- */
+  --line: #d9d9d6;         /* borders & dividers          */
+
+  /* ---- Emerald accent ---- */
+  --emerald: #0f8f73;      /* primary CTA, links, accents */
+  --emerald-2: #066a56;    /* hover states                */
+  --mint: #d8f4ec;         /* success / subtle backgrounds*/
+  --emerald-soft: rgba(15, 143, 115, 0.12);
+  --emerald-ring: rgba(15, 143, 115, 0.35);
+
+  /* ---- Typography ---- */
+  --font-display: 'Satoshi', 'General Sans', 'Inter', system-ui, sans-serif;
+  --font-body: 'General Sans', 'Inter', system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --fs-hero: clamp(40px, 7vw, 72px);
+  --fs-h2: clamp(32px, 4.6vw, 56px);
+  --fs-h3: clamp(22px, 2.4vw, 28px);
+  --fs-body: clamp(16px, 1.2vw, 18px);
+  --fs-caption: 14px;
+
+  --lh-tight: 1.04;
+  --lh-snug: 1.2;
+  --lh-body: 1.6;
+
+  /* ---- Spacing (8pt) ---- */
+  --s-1: 8px;
+  --s-2: 16px;
+  --s-3: 24px;
+  --s-4: 32px;
+  --s-5: 40px;
+  --s-6: 48px;
+  --s-8: 64px;
+  --s-10: 80px;
+  --s-12: 96px;
+  --s-15: 120px;
+  --s-20: 160px;
+
+  /* ---- Radius ---- */
+  --r-btn: 16px;
+  --r-card: 24px;
+  --r-img: 24px;
+  --r-input: 18px;
+  --r-pill: 999px;
+
+  /* ---- Shadow ---- */
+  --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 30px 80px rgba(0, 0, 0, 0.12);
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.06);
+
+  /* ---- Layout ---- */
+  --maxw: 1440px;
+  --margin: 80px;
+  --gutter: 24px;
+  --nav-h: 76px;
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 300ms;
+  --dur-reveal: 700ms;
+}
+
+@media (max-width: 1024px) {
+  :root { --margin: 40px; }
+}
+@media (max-width: 640px) {
+  :root { --margin: 20px; --nav-h: 64px; }
+}

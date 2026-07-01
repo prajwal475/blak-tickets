@@ -1,0 +1,64 @@
+.swipe {
+  margin-top: var(--s-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+}
+.swipe-deck {
+  position: relative;
+  width: min(300px, 80vw);
+  height: 380px;
+}
+.swipe-card {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--line);
+  will-change: transform;
+  background: var(--ink);
+}
+.swipe-card.is-top {
+  cursor: grab;
+  touch-action: pan-y;
+}
+.swipe-card.is-top:active { cursor: grabbing; }
+
+.swipe-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.swipe-hint {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.swipe-btn {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 22px;
+  line-height: 1;
+  box-shadow: var(--shadow-soft);
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.swipe-btn:hover { border-color: var(--emerald); color: var(--emerald); }
+.swipe-btn:active { transform: scale(0.92); }
+
+/* card content (category) */
+.swipe-cat { position: absolute; inset: 0; }
+.swipe-cat-photo { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.swipe-cat-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(24,24,24,0) 30%, rgba(24,24,24,0.82)); }
+.swipe-cat-meta { position: absolute; left: 0; right: 0; bottom: 0; padding: 22px; }
+.swipe-cat-name { display: block; font-family: var(--font-display); font-weight: 700; font-size: 26px; color: #fff; }
+.swipe-cat-count { display: block; margin-top: 4px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--mint); }
+.swipe-cat-go { display: inline-block; margin-top: 12px; font-family: var(--font-display); font-weight: 600; font-size: 14px; color: #fff; opacity: 0.9; }

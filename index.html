@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="icon" type="image/png" href="/brand/mark.png" />
+    <link rel="apple-touch-icon" href="/brand/mark.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <title>BLAK Tickets — One platform for every experience</title>
+    <meta name="description" content="Discover, book and enjoy unforgettable experiences — securely, instantly and effortlessly. Concerts, sports, comedy, festivals, gaming and more." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://blaktickets.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="BLAK Tickets — One platform for every experience" />
+    <meta property="og:description" content="Discover, book and enjoy unforgettable experiences — securely, instantly and effortlessly." />
+    <meta property="og:url" content="https://blaktickets.com/" />
+    <meta property="og:image" content="https://blaktickets.com/brand/lockup.png" />
+    <meta property="og:site_name" content="BLAK Tickets" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BLAK Tickets — One platform for every experience" />
+    <meta name="twitter:description" content="Discover, book and enjoy unforgettable experiences — securely, instantly and effortlessly." />
+    <meta name="twitter:image" content="https://blaktickets.com/brand/lockup.png" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "BLAK Tickets",
+            "url": "https://blaktickets.com/",
+            "logo": "https://blaktickets.com/brand/lockup.png",
+            "description": "A premium event discovery and ticketing platform — one platform for every experience."
+          },
+          {
+            "@type": "WebSite",
+            "name": "BLAK Tickets",
+            "url": "https://blaktickets.com/",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://blaktickets.com/events?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- Fonts: Fontshare (Satoshi, General Sans) + Inter fallback -->
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=general-sans@400,500,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+{
+  "title": "Safety Guidelines",
+  "lead": null,
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "1. Ticket Authenticity"
+    },
+    {
+      "type": "para",
+      "text": "Users must only purchase tickets through the official BlakTickets platform. Tickets obtained from unauthorized sources may be invalid or denied entry. BlakTickets is not responsible for fake or duplicate tickets purchased outside the platform. Each ticket is verified using a unique QR or digital identifier. Entry is allowed only after successful validation."
+    },
+    {
+      "type": "heading",
+      "text": "2. Event Entry Verification"
+    },
+    {
+      "type": "para",
+      "text": "Entry to events requires a valid ticket and identity verification where applicable. Event organizers may refuse entry if tickets are invalid or misused. Users must follow all entry rules set by organizers or venues. BlakTickets does not control physical entry decisions at venues. Final entry approval lies with the event authority."
+    },
+    {
+      "type": "heading",
+      "text": "3. Personal Safety Responsibility"
+    },
+    {
+      "type": "para",
+      "text": "Users are responsible for their own safety while attending any event. BlakTickets does not provide physical security at event locations. Users must remain aware of surroundings and follow safety instructions. Any risky behavior at events is at the user's own discretion. We recommend attending events in safe and trusted environments."
+    },
+    {
+      "type": "heading",
+      "text": "4. Fraud Prevention Warning"
+    },
+    {
+      "type": "para",
+      "text": "Users must avoid sharing OTPs, ticket codes, or account credentials with others. BlakTickets will never ask for passwords or sensitive details outside the app. Any request for such information should be considered suspicious. Report fraudulent activity immediately to support. We actively monitor and act against fraud attempts."
+    },
+    {
+      "type": "heading",
+      "text": "5. Payment Safety"
+    },
+    {
+      "type": "para",
+      "text": "All payments must be completed only through approved payment methods on the platform. Users should not transfer money directly to organizers or third parties outside the system. BlakTickets is not responsible for offline or external payments. Secure gateways are used to protect financial transactions. Always verify payment confirmation within the app."
+    },
+    {
+      "type": "heading",
+      "text": "6. Account Security"
+    },
+    {
+      "type": "para",
+      "text": "Users must keep their login credentials confidential and secure. Sharing accounts or OTPs may lead to unauthorized access risks."
+    },
+    {
+      "type": "para",
+      "text": "BlakTickets is not liable for losses caused by account sharing. Users should immediately report suspicious login activity. Strong passwords and secure devices are recommended."
+    },
+    {
+      "type": "heading",
+      "text": "7. Event Changes and Risks"
+    },
+    {
+      "type": "para",
+      "text": "Event schedules, venues, or timings may change at the organizer's discretion. Users are responsible for checking updates before attending events. BlakTickets is not responsible for last-minute changes or cancellations. Refund eligibility depends on organizer policies. Always verify event details before travel."
+    },
+    {
+      "type": "heading",
+      "text": "8. Prohibited Behavior at Events"
+    },
+    {
+      "type": "para",
+      "text": "Users must not engage in violence, harassment, or illegal activities at events. Such behavior may lead to removal from the venue without refund. Local authorities may take action against violations. BlakTickets supports strict enforcement of safe conduct rules. Users must respect venue rules and public safety laws."
+    },
+    {
+      "type": "heading",
+      "text": "9. Device and Digital Safety"
+    },
+    {
+      "type": "para",
+      "text": "Users should ensure their devices are secure when accessing tickets. Avoid using public or shared devices for sensitive transactions. BlakTickets is not responsible for device-based security breaches. Use official app versions only for safety. Keep your device updated and protected."
+    },
+    {
+      "type": "heading",
+      "text": "10. Unauthorized Ticket Resale"
+    },
+    {
+      "type": "para",
+      "text": "Reselling tickets outside BlakTickets is strictly discouraged and may be illegal for certain events. Organizers may cancel tickets found in resale or duplication cases. BlakTickets does not guarantee validity of resold tickets. All tickets are intended for personal use only unless specified. Violation may lead to account suspension."
+    },
+    {
+      "type": "heading",
+      "text": "11. Emergency Situations"
+    },
+    {
+      "type": "para",
+      "text": "In case of emergencies at events, users must follow instructions from venue authorities. BlakTickets does not manage emergency response at physical locations. Users should be aware of exits and safety procedures at venues. Local emergency services must be contacted when required. Safety instructions override all platform guidelines."
+    },
+    {
+      "type": "heading",
+      "text": "12. Age-Appropriate Access"
+    },
+    {
+      "type": "para",
+      "text": "Certain events may have age restrictions as defined by organizers. Users must respect age eligibility rules before booking tickets. BlakTickets may restrict access to inappropriate content for minors. False age information may result in account suspension. Age compliance is the user's responsibility."
+    },
+    {
+      "type": "heading",
+      "text": "13. Respect for Other Attendees"
+    },
+    {
+      "type": "para",
+      "text": "Users must maintain respectful behavior toward other attendees at all events. Harassment, discrimination, or disruptive conduct is not allowed. Organizers may remove users violating conduct standards. BlakTickets supports inclusive and safe event environments. Respectful behavior ensures a better experience for everyone."
+    },
+    {
+      "type": "heading",
+      "text": "14. Data and Privacy Safety"
+    },
+    {
+      "type": "para",
+      "text": "Users should not share personal or sensitive information with unknown parties. BlakTickets protects user data using standard security measures. However, users must also practice safe data sharing habits. Report any suspected data misuse immediately. Privacy protection is a shared responsibility."
+    },
+    {
+      "type": "heading",
+      "text": "15. Reporting Unsafe Events"
+    },
+    {
+      "type": "para",
+      "text": "Users are encouraged to report unsafe, fraudulent, or suspicious events immediately. BlakTickets will review and take action against reported violations. Reports can be submitted through the app or support channels. False reporting may also lead to restrictions. User reports help maintain platform safety and trust."
+    }
+  ]
+}

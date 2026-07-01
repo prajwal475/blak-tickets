@@ -1,0 +1,137 @@
+/* ---- /explore + /category/:slug ---- */
+.cat-page {
+  padding-block: var(--s-8) var(--s-12);
+}
+.cat-back-link {
+  display: inline-block;
+  margin-bottom: var(--s-4);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+  transition: color var(--dur) var(--ease);
+}
+.cat-back-link:hover { color: var(--emerald); }
+
+/* category grid (all categories) */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3);
+}
+.cat-tile {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.cat-tile:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.cat-tile-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 600ms var(--ease);
+}
+.cat-tile:hover .cat-tile-photo { transform: scale(1.08); }
+.cat-tile-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(24,24,24,0) 35%, rgba(24,24,24,0.78));
+}
+.cat-tile-meta {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cat-tile-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+}
+.cat-tile-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.78);
+}
+
+/* events grid (one category) */
+.ev-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3);
+}
+.ev-tile {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.ev-tile:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); border-color: var(--emerald); }
+.ev-tile-media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+.ev-tile-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease); }
+.ev-tile:hover .ev-tile-media img { transform: scale(1.08); }
+.ev-tile-tag {
+  position: absolute;
+  top: 12px; left: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #fff;
+  padding: 6px 11px;
+  border-radius: var(--r-pill);
+  background: rgba(15,143,115,0.82);
+  backdrop-filter: blur(6px);
+}
+.ev-tile-body { display: flex; flex-direction: column; gap: 4px; padding: 18px; flex: 1; }
+.ev-tile-title { font-size: 19px; letter-spacing: -0.02em; color: var(--ink); line-height: 1.15; }
+.ev-tile-loc { font-size: 13px; color: var(--muted); }
+.ev-tile-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: auto; padding-top: 10px;
+  font-size: 13px; color: var(--body);
+}
+.ev-tile-price { font-family: var(--font-display); font-weight: 700; color: var(--ink); }
+.ev-tile-book {
+  margin-top: 12px;
+  height: 44px;
+  border-radius: var(--r-btn);
+  background: var(--emerald);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 600;
+  transition: background var(--dur) var(--ease);
+}
+.ev-tile-book:hover { background: var(--emerald-2); }
+
+/* empty state */
+.cat-empty {
+  text-align: center;
+  padding: var(--s-10) var(--s-3);
+  border: 1px dashed var(--line);
+  border-radius: var(--r-card);
+  background: var(--surface);
+}
+.cat-empty-title { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--ink); }
+.cat-empty-sub { margin-top: 8px; color: var(--muted); max-width: 42ch; margin-inline: auto; }
+.cat-empty-cta { margin-top: var(--s-3); padding-inline: var(--s-4); width: auto; }
+
+@media (max-width: 900px) {
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .ev-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: var(--s-2); }
+  .ev-grid { grid-template-columns: 1fr; }
+}

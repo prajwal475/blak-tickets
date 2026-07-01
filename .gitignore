@@ -1,0 +1,16 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.vite
+.claude/
+
+# large source media kept out of the repo
+imagge/
+*.mp4
+# ...but the intro splash clip is needed at runtime
+!public/intro/intro.mp4
+
+# generated preview deck (regenerate with scripts/shoot.mjs + make_pdf.py)
+BLAK-Tickets-Preview.pdf

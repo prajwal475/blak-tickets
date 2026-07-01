@@ -1,0 +1,14 @@
+{
+  "name": "BLAK Tickets",
+  "short_name": "BLAK",
+  "description": "One platform for every experience. Discover, book and enjoy events — securely, instantly and effortlessly.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f8f73",
+  "icons": [
+    { "src": "/brand/mark.png", "sizes": "any", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/mark.png", "sizes": "any", "type": "image/png", "purpose": "maskable" }
+  ]
+}
