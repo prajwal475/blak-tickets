@@ -1,143 +1,150 @@
-// Section 4 — Featured Events. Horizontal carousel: arrows + drag + wheel +
-// native touch swipe, scroll-snap, staggered entrance.
-import { useRef, useState, useEffect, useCallback } from 'react'
-import Button from '../ui/Button'
+// Section 4 — Featured Events.
+// Swiss editorial "floating canvas": varied slides (dark / light / flame) drift
+// on a light studio backdrop in a tilted 3D plane, each an editorial layout with
+// an oversized index number, hairline rules and a small metric dashboard row.
+// GSAP smooth marquee drift + mouse parallax; fully reduced-motion aware.
+import { useEffect, useRef } from 'react'
 import { FEATURED } from '../../config/events'
 import { openApp } from '../../lib/app'
 import { track } from '../../lib/analytics'
+import { useRouter } from '../../lib/router'
+import { gsap } from '../../lib/gsap'
+import { prefersReducedMotion } from '../../lib/capabilities'
 import './featured.css'
 
 const inr = (p) => (p === 0 ? 'Free' : `₹${p.toLocaleString('en-IN')}`)
 
-function EventCard({ e, i }) {
+// per-card scatter + slide colour treatment (mixed like the reference deck)
+const RZ = [-2.5, 2, -1.5, 2.5, -2, 1.5, -1]
+const TY = [10, -12, 5, -9, 12, -6, 3]
+const TZ = [0, -26, 18, -12, 16, -30, 8]
+const VARIANT = ['dark', 'light', 'flame', 'dark', 'light', 'dark', 'flame']
+
+const baseTilt = () => {
+  const w = typeof window !== 'undefined' ? window.innerWidth : 1440
+  if (w <= 640) return { rx: 3, ry: -6, k: 6 }
+  if (w <= 900) return { rx: 4, ry: -9, k: 9 }
+  return { rx: 6, ry: -13, k: 12 }
+}
+
+function Metric({ label, value }) {
   return (
-    <article className="ev-card" data-reveal style={{ transitionDelay: `${(i % 5) * 80}ms` }}>
-      <div className="ev-media">
-        <img src={e.img} alt={e.title} loading="lazy" />
-        <span className="ev-overlay" aria-hidden="true" />
-        <span className={`ev-badge ev-badge--${e.tag.replace(/[^a-z]/gi, '').toLowerCase()}`}>{e.tag}</span>
-      </div>
-      <div className="ev-body">
-        <span className="ev-cat">{e.category}</span>
-        <h3 className="ev-title">{e.title}</h3>
-        <p className="ev-where">{e.venue}, {e.city}</p>
-        <div className="ev-foot">
-          <span className="ev-date">{e.date} · {e.time}</span>
-          <span className="ev-price">{inr(e.price)}</span>
+    <div className="ev-metric">
+      <span className="ev-m-label">{label}</span>
+      <span className="ev-m-val">{value}</span>
+    </div>
+  )
+}
+
+function EventCard({ e, i, dup }) {
+  const n = String(i + 1).padStart(2, '0')
+  const [date, mon] = e.date.split(', ')
+  const style = {
+    '--rz': `${RZ[i]}deg`,
+    '--ty': `${TY[i]}px`,
+    '--tz': `${TZ[i]}px`,
+    '--fd': `${-(i * 1.05).toFixed(2)}s`,
+  }
+  return (
+    <article className={`ev-card ev-card--${VARIANT[i]}`} style={style} aria-hidden={dup || undefined}>
+      <div className="ev-face">
+        <div className="ev-top">
+          <span className="ev-num">{n}</span>
+          <span className="ev-tag">{e.tag}</span>
         </div>
-        <div className="ev-book">
-          <Button variant="primary" className="btn--sm" onClick={() => openApp(`featured-${e.id}`)}>
-            Book Now
-          </Button>
+        <div className="ev-rule" aria-hidden="true" />
+        <div className="ev-media">
+          <img src={e.img} alt={e.title} loading="lazy" />
         </div>
+        <div className="ev-body">
+          <span className="ev-cat">{e.category}</span>
+          <h3 className="ev-title">{e.title}</h3>
+          <p className="ev-where">{e.venue}, {e.city}</p>
+        </div>
+        <div className="ev-rule" aria-hidden="true" />
+        <div className="ev-metrics">
+          <Metric label="Day" value={date} />
+          <Metric label="Date" value={mon || '—'} />
+          <Metric label="From" value={inr(e.price)} />
+        </div>
+        <button className="ev-book" tabIndex={dup ? -1 : 0} onClick={() => openApp(`featured-${e.id}`)}>
+          Book now <span aria-hidden="true">→</span>
+        </button>
       </div>
     </article>
   )
 }
 
 export default function Featured() {
-  const trackRef = useRef(null)
-  const [atStart, setAtStart] = useState(true)
-  const [atEnd, setAtEnd] = useState(false)
-
-  const update = useCallback(() => {
-    const el = trackRef.current
-    if (!el) return
-    setAtStart(el.scrollLeft <= 2)
-    setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 2)
-  }, [])
-
-  const step = useCallback((dir) => {
-    const el = trackRef.current
-    if (!el) return
-    const card = el.querySelector('.ev-card')
-    const w = card ? card.offsetWidth + 24 : 364
-    el.scrollBy({ left: dir * w * 1.5, behavior: 'smooth' })
-    track('featured_nav', { dir })
-  }, [])
+  const { navigate } = useRouter()
+  const sceneRef = useRef(null)
+  const stageRef = useRef(null)
+  const marqueeRef = useRef(null)
+  const loop = [...FEATURED, ...FEATURED]
 
   useEffect(() => {
-    const el = trackRef.current
-    if (!el) return
-    update()
-    el.addEventListener('scroll', update, { passive: true })
-    window.addEventListener('resize', update)
-    return () => {
-      el.removeEventListener('scroll', update)
-      window.removeEventListener('resize', update)
-    }
-  }, [update])
+    if (prefersReducedMotion()) return
+    const scene = sceneRef.current
+    const stage = stageRef.current
+    const marquee = marqueeRef.current
+    if (!scene || !stage || !marquee) return
 
-  // vertical wheel -> horizontal scroll (when not already a horizontal trackpad swipe)
-  useEffect(() => {
-    const el = trackRef.current
-    if (!el) return
-    const onWheel = (ev) => {
-      if (Math.abs(ev.deltaY) <= Math.abs(ev.deltaX)) return
-      el.scrollLeft += ev.deltaY
-      ev.preventDefault()
-    }
-    el.addEventListener('wheel', onWheel, { passive: false })
-    return () => el.removeEventListener('wheel', onWheel)
-  }, [])
+    const b = baseTilt()
+    const ctx = gsap.context(() => {
+      gsap.set(stage, { rotateX: b.rx, rotateY: b.ry })
+      const drift = gsap.to(marquee, { xPercent: -50, duration: 48, ease: 'none', repeat: -1 })
 
-  // pointer drag-to-scroll
-  useEffect(() => {
-    const el = trackRef.current
-    if (!el) return
-    let down = false, startX = 0, startLeft = 0, moved = false
-    const onDown = (ev) => {
-      down = true; moved = false
-      startX = ev.clientX; startLeft = el.scrollLeft
-      el.classList.add('is-dragging')
-    }
-    const onMove = (ev) => {
-      if (!down) return
-      const dx = ev.clientX - startX
-      if (Math.abs(dx) > 4) moved = true
-      el.scrollLeft = startLeft - dx
-    }
-    const onUp = () => { down = false; el.classList.remove('is-dragging') }
-    const onClickCapture = (ev) => { if (moved) { ev.preventDefault(); ev.stopPropagation() } }
-    el.addEventListener('pointerdown', onDown)
-    window.addEventListener('pointermove', onMove)
-    window.addEventListener('pointerup', onUp)
-    el.addEventListener('click', onClickCapture, true)
-    return () => {
-      el.removeEventListener('pointerdown', onDown)
-      window.removeEventListener('pointermove', onMove)
-      window.removeEventListener('pointerup', onUp)
-      el.removeEventListener('click', onClickCapture, true)
-    }
+      const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+      if (!canHover) return
+
+      const onMove = (ev) => {
+        const r = scene.getBoundingClientRect()
+        const px = (ev.clientX - r.left) / r.width - 0.5
+        const py = (ev.clientY - r.top) / r.height - 0.5
+        gsap.to(stage, { rotateY: b.ry + px * b.k, rotateX: b.rx - py * b.k * 0.7, duration: 0.9, ease: 'power2.out' })
+      }
+      const reset = () => gsap.to(stage, { rotateY: b.ry, rotateX: b.rx, duration: 1.1, ease: 'power2.out' })
+      const pause = () => drift.pause()
+      const play = () => { drift.play(); reset() }
+
+      scene.addEventListener('pointermove', onMove)
+      scene.addEventListener('pointerenter', pause)
+      scene.addEventListener('pointerleave', play)
+      return () => {
+        scene.removeEventListener('pointermove', onMove)
+        scene.removeEventListener('pointerenter', pause)
+        scene.removeEventListener('pointerleave', play)
+      }
+    }, scene)
+
+    return () => ctx.revert()
   }, [])
 
   return (
     <section className="section featured" id="featured">
       <div className="container">
         <header className="feat-head">
-          <div>
-            <p className="eyebrow" data-reveal>Featured this week</p>
-            <h2 className="section-title" data-reveal data-reveal-delay="1">
-              Handpicked experiences you shouldn't miss.
-            </h2>
-          </div>
-          <div className="feat-nav" data-reveal data-reveal-delay="2">
-            <button className="feat-arrow" onClick={() => step(-1)} disabled={atStart} aria-label="Previous">←</button>
-            <button className="feat-arrow" onClick={() => step(1)} disabled={atEnd} aria-label="Next">→</button>
-          </div>
+          <p className="feat-kicker" data-reveal>Featured — 4.1</p>
+          <h2 className="feat-title" data-reveal data-reveal-delay="1">
+            Handpicked experiences<br />you shouldn't miss.
+          </h2>
         </header>
       </div>
 
-      <div className="feat-track" ref={trackRef}>
-        <div className="feat-rail">
-          {FEATURED.map((e, i) => (
-            <EventCard key={e.id} e={e} i={i} />
-          ))}
+      <div className="feat-scene" ref={sceneRef} aria-label="Featured events">
+        <div className="feat-stage" ref={stageRef}>
+          <div className="feat-marquee" ref={marqueeRef}>
+            {loop.map((e, i) => (
+              <EventCard key={i} e={e} i={i % FEATURED.length} dup={i >= FEATURED.length} />
+            ))}
+          </div>
         </div>
       </div>
 
       <div className="container feat-cta">
-        <Button variant="ghost" onClick={() => track('view_all_events')}>View all events</Button>
+        <button className="feat-viewall" onClick={() => { track('view_all_events'); navigate('/events') }}>
+          View all events <span aria-hidden="true">→</span>
+        </button>
       </div>
     </section>
   )

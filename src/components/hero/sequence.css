@@ -1,7 +1,7 @@
 /* ---- Full-bleed scroll-scrubbed booking sequence ---- */
 .seq {
   position: relative;
-  height: 220vh;            /* long scroll distance => slow scrub */
+  height: 340vh;            /* longer scroll distance => slower scrub */
 }
 .seq-stage {
   position: sticky;
@@ -13,16 +13,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  perspective: 1400px;      /* gives the phone a real 3D tilt on parallax */
 }
 /* blurred ambient backdrop fills the full width seamlessly... */
 .seq-bg {
   position: absolute;
-  inset: -8%;
+  inset: -12%;
   background-size: cover;
   background-position: center;
   filter: blur(54px) saturate(1.05) brightness(0.96);
   transform: scale(1.12);
   z-index: 0;
+  will-change: transform;
 }
 /* ...while the foreground shows the whole frame, never cropped/zoomed */
 .seq-canvas {
@@ -37,15 +39,30 @@
 .seq-cap {
   position: absolute;
   z-index: 2;
-  left: 0;
-  right: 0;
-  bottom: 26px;
-  text-align: center;
+  left: 24px;
+  bottom: 24px;
+  max-width: 58%;
+  text-align: left;
   font-family: var(--font-mono);
   font-size: 13px;
   letter-spacing: 0.06em;
-  color: rgba(24, 24, 24, 0.55);
+  color: rgba(24, 24, 24, 0.6);
   pointer-events: none;
+}
+/* brand mark on the booking scene — bottom-right corner */
+.seq-logo {
+  position: absolute;
+  z-index: 3;
+  bottom: 22px;
+  right: 26px;
+  height: 30px;
+  width: auto;
+  opacity: 0.92;
+  pointer-events: none;
+}
+@media (max-width: 640px) {
+  .seq-logo { bottom: 16px; right: 16px; height: 24px; }
+  .seq-cap { font-size: 12px; max-width: 52%; }
 }
 
 /* reduced-motion: no pin/scrub — show a single representative frame */
@@ -66,5 +83,5 @@
 }
 
 @media (max-width: 640px) {
-  .seq { height: 200vh; }
+  .seq { height: 280vh; }
 }

@@ -1,27 +1,34 @@
 // Section 3 — Find Events Near You.
-// 40/60 split: a search panel + a stylized (no-API) city map with pulsing
-// emerald pins that reveal a floating preview card on hover / tap / focus.
-import { useState } from 'react'
+// A "solar" spatial scene: a drifting particle field + soft solar glow behind a
+// floating frosted-glass search panel and a tilted glass map plane with glowing,
+// pulsing markers. Layers parallax with the cursor. Reduced-motion friendly.
+import { useEffect, useRef } from 'react'
 import Button from '../ui/Button'
+import DatePicker from '../ui/DatePicker'
+import RealMap from '../maps/RealMap'
+import ParticleField from '../ParticleField'
 import { EVENTS } from '../../config/events'
 import { CATEGORIES } from '../../config/categories'
+import { CITY_COORDS } from '../../config/stats'
 import { track } from '../../lib/analytics'
-import { openApp } from '../../lib/app'
+import { gsap } from '../../lib/gsap'
+import { prefersReducedMotion } from '../../lib/capabilities'
 import './findnearyou.css'
 
 const CITIES = ['Mumbai', 'Bengaluru', 'Delhi', 'Hyderabad', 'Pune', 'Chennai', 'Goa', 'Kolkata']
-
-// pins = a handful of events placed on the stylized map (x%, y%)
-const PINS = [
-  { ...EVENTS[0], x: 30, y: 30 },
-  { ...EVENTS[3], x: 64, y: 22 },
-  { ...EVENTS[6], x: 78, y: 54 },
-  { ...EVENTS[4], x: 22, y: 64 },
-  { ...EVENTS[9], x: 52, y: 70 },
-  { ...EVENTS[2], x: 46, y: 44 },
-]
-
 const inr = (p) => (p === 0 ? 'Free' : `₹${p.toLocaleString('en-IN')}`)
+
+// plot every event at its city, nudged apart so same-city pins don't stack
+const EVENT_MARKERS = EVENTS.filter((e) => CITY_COORDS[e.city]).map((e, i) => {
+  const [lat, lng] = CITY_COORDS[e.city]
+  const nudge = (((i * 53) % 16) - 8) / 200
+  return {
+    lat: lat + nudge,
+    lng: lng - nudge,
+    label: e.title,
+    popup: `<strong>${e.title}</strong><br>${e.venue}, ${e.city}<br>${e.date} · ${inr(e.price)}`,
+  }
+})
 
 function Field({ label, children }) {
   return (
@@ -33,18 +40,51 @@ function Field({ label, children }) {
 }
 
 export default function FindNearYou() {
-  const [active, setActive] = useState(null)
+  const sceneRef = useRef(null)
+  const panelRef = useRef(null)
+  const mapRef = useRef(null)
 
   const onSearch = (e) => {
     e.preventDefault()
     track('search_events')
   }
 
+  useEffect(() => {
+    if (prefersReducedMotion()) return
+    const scene = sceneRef.current
+    if (!scene || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+
+    const gctx = gsap.context(() => {
+      const onMove = (ev) => {
+        const r = scene.getBoundingClientRect()
+        const px = (ev.clientX - r.left) / r.width - 0.5
+        const py = (ev.clientY - r.top) / r.height - 0.5
+        gsap.to(panelRef.current, { x: px * -20, y: py * -14, duration: 0.9, ease: 'power2.out' })
+        gsap.to(mapRef.current, { rotateY: -8 + px * 6, rotateX: 5 - py * 5, x: px * 12, duration: 0.9, ease: 'power2.out' })
+      }
+      const reset = () => {
+        gsap.to(panelRef.current, { x: 0, y: 0, duration: 1.1, ease: 'power2.out' })
+        gsap.to(mapRef.current, { rotateY: -8, rotateX: 5, x: 0, duration: 1.1, ease: 'power2.out' })
+      }
+      scene.addEventListener('pointermove', onMove)
+      scene.addEventListener('pointerleave', reset)
+      return () => {
+        scene.removeEventListener('pointermove', onMove)
+        scene.removeEventListener('pointerleave', reset)
+      }
+    }, scene)
+
+    return () => gctx.revert()
+  }, [])
+
   return (
-    <section className="section find" id="near-you">
+    <section className="section find" id="near-you" ref={sceneRef}>
+      <ParticleField count={110} />
+      <div className="find-sun" aria-hidden="true" />
+      <div className="find-sun find-sun--2" aria-hidden="true" />
       <div className="container find-grid">
         {/* ---- Search panel ---- */}
-        <form className="find-panel" data-reveal onSubmit={onSearch}>
+        <form className="find-panel" ref={panelRef} data-reveal onSubmit={onSearch}>
           <p className="eyebrow">Find events near you</p>
           <h2 className="section-title">Find your next experience.</h2>
           <p className="section-sub">Search by city, category, venue or date.</p>
@@ -75,12 +115,7 @@ export default function FindNearYou() {
               </select>
             </Field>
             <Field label="Date">
-              <select defaultValue="any">
-                <option value="any">Any date</option>
-                <option value="today">Today</option>
-                <option value="weekend">This weekend</option>
-                <option value="week">This week</option>
-              </select>
+              <DatePicker placeholder="Any date" />
             </Field>
             <Field label="Price">
               <select defaultValue="any">
@@ -103,60 +138,10 @@ export default function FindNearYou() {
           <Button variant="primary" type="submit" className="find-go">Search events</Button>
         </form>
 
-        {/* ---- Stylized map ---- */}
-        <div className="find-map" data-reveal data-reveal-delay="1">
-          <div className="find-map-inner">
-            <svg className="find-map-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              {/* parks / water */}
-              <rect x="0" y="0" width="100" height="100" fill="var(--surface)" />
-              <circle cx="20" cy="78" r="16" fill="var(--mint)" opacity="0.6" />
-              <rect x="60" y="6" width="34" height="22" rx="3" fill="var(--mint)" opacity="0.45" />
-              {/* blocks */}
-              <g opacity="0.7">
-                <rect x="8" y="10" width="18" height="14" rx="2" fill="#ededeb" />
-                <rect x="40" y="14" width="14" height="12" rx="2" fill="#ededeb" />
-                <rect x="74" y="40" width="18" height="16" rx="2" fill="#ededeb" />
-                <rect x="34" y="56" width="16" height="14" rx="2" fill="#ededeb" />
-                <rect x="56" y="74" width="20" height="16" rx="2" fill="#ededeb" />
-              </g>
-              {/* roads */}
-              <g stroke="var(--emerald)" strokeWidth="0.7" opacity="0.32" strokeLinecap="round">
-                <line x1="0" y1="36" x2="100" y2="30" />
-                <line x1="0" y1="64" x2="100" y2="70" />
-                <line x1="32" y1="0" x2="38" y2="100" />
-                <line x1="68" y1="0" x2="62" y2="100" />
-                <line x1="0" y1="0" x2="100" y2="100" opacity="0.5" />
-              </g>
-            </svg>
-
-            {PINS.map((p) => (
-              <div
-                key={p.id}
-                className={`map-pin${active === p.id ? ' is-active' : ''}`}
-                style={{ left: `${p.x}%`, top: `${p.y}%` }}
-              >
-                <button
-                  className="map-dot"
-                  aria-label={`${p.title} in ${p.city}`}
-                  onClick={() => { setActive(active === p.id ? null : p.id); track('map_pin', { id: p.id }) }}
-                >
-                  <span className="map-dot-ping" aria-hidden="true" />
-                </button>
-
-                <div className="map-card" role="dialog" aria-label={p.title}>
-                  <div className="map-card-img" style={{ backgroundImage: `url(${p.img})` }} />
-                  <div className="map-card-body">
-                    <span className="map-card-cat">{p.category}</span>
-                    <strong className="map-card-title">{p.title}</strong>
-                    <span className="map-card-meta">{p.date} · {p.venue}</span>
-                    <div className="map-card-foot">
-                      <span className="map-card-price">{inr(p.price)}</span>
-                      <button className="map-card-book" onClick={() => openApp(`map-${p.id}`)}>Book</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+        {/* ---- Tilted glass map ---- */}
+        <div className="find-map-wrap" data-reveal data-reveal-delay="1">
+          <div className="find-map" ref={mapRef}>
+            <RealMap locate pulse interactive={false} center={[20.5, 78.9]} zoom={4.4} markers={EVENT_MARKERS} />
           </div>
         </div>
       </div>

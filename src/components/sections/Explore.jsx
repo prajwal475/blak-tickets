@@ -1,17 +1,14 @@
 // Section 2 — Explore Every Experience.
 // A floating ecosystem: the BLAK mark at the centre, 10 category bubbles orbiting
-// slowly (40s). On mobile it becomes a draggable swipe-stack of category cards.
-// Tapping any category opens its events page; "Explore all" opens /explore.
+// slowly (40s) — on every breakpoint, resized down for phones. Tapping any
+// category opens its events page; "Explore all" opens /explore.
 import { useMemo } from 'react'
 import Logo from '../layout/Logo'
 import Button from '../ui/Button'
-import SwipeStack from '../SwipeStack'
 import { CATEGORIES } from '../../config/categories'
-import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { track } from '../../lib/analytics'
 import { useRouter } from '../../lib/router'
 import './explore.css'
-import '../swipestack.css'
 
 function CatCard({ c, bubble = false, onOpen }) {
   return (
@@ -31,22 +28,7 @@ function CatCard({ c, bubble = false, onOpen }) {
   )
 }
 
-function SwipeCatCard({ c }) {
-  return (
-    <div className="swipe-cat">
-      <span className="swipe-cat-photo" style={{ backgroundImage: `url(${c.img})` }} aria-hidden="true" />
-      <span className="swipe-cat-veil" aria-hidden="true" />
-      <span className="swipe-cat-meta">
-        <span className="swipe-cat-name">{c.label}</span>
-        <span className="swipe-cat-count">{c.count} events</span>
-        <span className="swipe-cat-go">View events →</span>
-      </span>
-    </div>
-  )
-}
-
 export default function Explore() {
-  const isMobile = useMediaQuery('(max-width: 640px)')
   const { navigate } = useRouter()
   const n = CATEGORIES.length
 
@@ -79,39 +61,28 @@ export default function Explore() {
           </p>
         </header>
 
-        {isMobile ? (
-          <div data-reveal>
-            <SwipeStack
-              items={CATEGORIES}
-              getKey={(c) => c.id}
-              onSelect={openCategory}
-              renderCard={(c) => <SwipeCatCard c={c} />}
-            />
+        <div className="hub" data-reveal>
+          <div className="hub-core">
+            <span className="hub-ring" aria-hidden="true" />
+            <span className="hub-pulse" aria-hidden="true" />
+            <Logo variant="mark" className="hub-mark" />
           </div>
-        ) : (
-          <div className="hub" data-reveal>
-            <div className="hub-core">
-              <span className="hub-ring" aria-hidden="true" />
-              <span className="hub-pulse" aria-hidden="true" />
-              <Logo variant="mark" className="hub-mark" />
-            </div>
-            <div className="hub-spin">
-              {CATEGORIES.map((c, i) => (
-                <div
-                  key={c.id}
-                  className="bubble"
-                  style={{ '--x': pos[i].x, '--y': pos[i].y }}
-                >
-                  <div className="bubble-rev">
-                    <div className="bubble-float" style={{ '--d': `${(i % 5) * 0.6}s` }}>
-                      <CatCard c={c} bubble onOpen={openCategory} />
-                    </div>
+          <div className="hub-spin">
+            {CATEGORIES.map((c, i) => (
+              <div
+                key={c.id}
+                className="bubble"
+                style={{ '--x': pos[i].x, '--y': pos[i].y }}
+              >
+                <div className="bubble-rev">
+                  <div className="bubble-float" style={{ '--d': `${(i % 5) * 0.6}s` }}>
+                    <CatCard c={c} bubble onOpen={openCategory} />
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        )}
+        </div>
 
         <div className="explore-cta" data-reveal>
           <Button

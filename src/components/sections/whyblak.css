@@ -1,24 +1,42 @@
 .why { position: relative; overflow: hidden; }
+.why .container { position: relative; z-index: 1; }
 .why-blob {
   position: absolute;
   border-radius: 50%;
   filter: blur(70px);
   opacity: 0.5;
   pointer-events: none;
+  z-index: 0;
 }
-.why-blob--1 { width: 420px; height: 420px; left: -120px; top: 60px; background: rgba(15,143,115,0.12); }
-.why-blob--2 { width: 480px; height: 480px; right: -160px; bottom: 0; background: rgba(216,244,236,0.6); }
+.why-blob--1 { width: 420px; height: 420px; left: -120px; top: 60px; background: rgba(15,143,115,0.12); animation: whyBlob1 22s ease-in-out infinite; }
+.why-blob--2 { width: 480px; height: 480px; right: -160px; bottom: 0; background: rgba(216,244,236,0.6); animation: whyBlob2 30s ease-in-out infinite; }
+@keyframes whyBlob1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(50px,40px) scale(1.08); } }
+@keyframes whyBlob2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-60px,-30px) scale(1.06); } }
 
-.why .sec-head { text-align: center; max-width: 720px; margin-inline: auto; }
+/* soft cursor spotlight following the mouse across the section */
+.why-spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--sx, 50%) var(--sy, 30%), rgba(15,143,115,0.08), transparent 60%);
+  transition: background 120ms linear;
+}
+
+.why .sec-head { text-align: center; max-width: 720px; margin-inline: auto; will-change: transform; }
 .why .sec-head .section-sub { margin-inline: auto; }
 
-/* ---- grid ---- */
+/* ---- 3D grid ---- */
 .why-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--s-4);
   margin-top: var(--s-8);
+  perspective: 2200px;
+  perspective-origin: 50% 40%;
 }
+.why-card-outer { transform-style: preserve-3d; will-change: transform, opacity, filter; }
+
 .why-card {
   position: relative;
   min-height: 300px;
@@ -26,52 +44,95 @@
   flex-direction: column;
   padding: var(--s-4);
   border-radius: var(--r-card);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+/* the visual surface — its own leaf layer so overflow-clipping the sweep does
+   not flatten the card's 3D children */
+.why-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--r-card);
   background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(247,247,245,0.7));
   border: 1px solid var(--line);
   box-shadow: var(--shadow-card);
   overflow: hidden;
-  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
-    border-color var(--dur) var(--ease);
+  transition: box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
-/* glass highlight */
-.why-card::before {
+.why-card-bg::before {
   content: '';
   position: absolute;
   left: 0; right: 0; top: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
 }
-.why-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: var(--shadow-hover);
+.why-card:hover .why-card-bg {
+  box-shadow: var(--shadow-hover), 0 0 0 1px var(--emerald-ring), 0 0 40px -6px rgba(15,143,115,0.35);
   border-color: var(--emerald);
 }
+
+/* diagonal glass reflection sweep on hover (clipped to the card radius) */
+.why-card-sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateZ(4px);
+  transition: opacity var(--dur) var(--ease);
+}
+.why-card-sweep::after {
+  content: '';
+  position: absolute;
+  top: -60%; left: 0;
+  width: 45%; height: 220%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,0.55), transparent);
+  transform: translateX(-160%) rotate(8deg);
+}
+.why-card:hover .why-card-sweep { opacity: 1; }
+.why-card:hover .why-card-sweep::after { animation: whySweep 0.9s var(--ease); }
+@keyframes whySweep { from { transform: translateX(-160%) rotate(8deg); } to { transform: translateX(360%) rotate(8deg); } }
+
+/* ---- depth layers ---- */
 .why-no {
   position: absolute;
   top: 18px; right: 22px;
+  z-index: 4;
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.1em;
   color: var(--muted);
+  transform: translateZ(120px);
 }
-
 .why-stage {
+  position: relative;
+  z-index: 2;
   flex: 1;
   display: grid;
   place-items: center;
   min-height: 150px;
+  transform-style: preserve-3d;
 }
 .illo {
   width: 200px; height: 150px;
-  transform: translate(calc(var(--mx, 0) * 16px), calc(var(--my, 0) * 16px));
-  transition: transform 200ms var(--ease);
+  transform: translateZ(100px);
+  animation: illoFloat 7s ease-in-out infinite;
 }
+@keyframes illoFloat {
+  0%, 100% { transform: translateZ(100px) translateY(0) rotate(-1.5deg); }
+  50% { transform: translateZ(100px) translateY(-6px) rotate(1.5deg); }
+}
+.why-text { position: relative; z-index: 2; transform-style: preserve-3d; }
 .why-text h3 {
   font-size: 22px;
   letter-spacing: -0.02em;
   margin-bottom: 6px;
+  transform: translateZ(70px);
 }
-.why-text p { color: var(--body); font-size: 15px; max-width: 42ch; }
+.why-text p { color: var(--body); font-size: 15px; max-width: 42ch; transform: translateZ(45px); }
 
 /* ===== Illustration base palette ===== */
 .illo .b-phone,
@@ -141,7 +202,6 @@
 .why-card:hover .illo--verified .v-badge-bg { fill: var(--emerald-2); }
 
 /* --- 4. qr --- */
-.q-frame { }
 .q-cells rect { fill: var(--ink); }
 .q-beam { fill: var(--emerald); opacity: 0.85; }
 .illo--qr .q-beam { animation: beam 2.4s ease-in-out infinite; }
@@ -188,9 +248,14 @@
 .why-logo:hover { opacity: 1; color: var(--emerald); }
 
 .why-cta { text-align: center; margin-top: var(--s-8); }
-.btn--organizer:hover { background: var(--emerald); color: #fff; border-color: var(--emerald); }
+.btn--organizer:hover { background: var(--brick); color: #fff; border-color: var(--brick); }
 
 @media (max-width: 760px) {
-  .why-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; perspective: 1400px; }
   .why-marquee-track { animation-duration: 22s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .why-blob, .illo { animation: none; }
+  .illo { transform: none; }
+  .why-no, .why-text h3, .why-text p { transform: none; }
 }

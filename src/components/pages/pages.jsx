@@ -1,7 +1,7 @@
 // Route registry for the static content pages. Each entry maps a pathname to a
 // rendered page element backed by the JSON extracted from the source PDFs.
 import ContentPage from './ContentPage'
-import { AllCategoriesPage, CategoryEventsPage } from './CategoryPages'
+import { AllCategoriesPage, CategoryEventsPage, AllEventsPage } from './CategoryPages'
 import { Link } from '../../lib/router'
 import about from '../../content/about.json'
 import privacy from '../../content/privacy.json'
@@ -34,6 +34,7 @@ export const ROUTES = {
   '/safety':  () => <ContentPage data={safety} eyebrow="Trust & safety" meta={UPDATED} />,
   '/press':   () => <ContentPage data={press} eyebrow="Newsroom" />,
   '/explore': () => <AllCategoriesPage />,
+  '/events':  () => <AllEventsPage />,
   '/blog':    () => <BlogIndex />,
   [BLOG_POST]: () => <ContentPage data={blog2} eyebrow="The BLAK Blog" meta="Published by BLAK Tickets" />,
 }

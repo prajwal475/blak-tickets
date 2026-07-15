@@ -1,10 +1,17 @@
 // Section 5 — Why BLAK Tickets.
-// 2x2 glass feature cards with animated SVG illustrations + mouse parallax,
-// a trusted-logos marquee, and a "Become an Organizer" CTA.
+// A cinematic 3D feature grid: each card tilts in real perspective with a
+// magnetic drift, depth-layered contents (icon / heading / copy / number all on
+// their own Z-plane), a glass reflection sweep, GSAP scroll reveals + per-card
+// scroll parallax, an idle "breathing" motion and a cursor spotlight. Falls back
+// to the flat static layout under reduced-motion / touch.
+import { useEffect, useRef } from 'react'
 import Button from '../ui/Button'
 import { TRUSTED_LOGOS } from '../../config/testimonials'
 import { track } from '../../lib/analytics'
 import { openApp } from '../../lib/app'
+import { gsap, ScrollTrigger } from '../../lib/gsap'
+import { useCardTilt } from '../../hooks/useCardTilt'
+import { prefersReducedMotion, isCoarsePointer } from '../../lib/capabilities'
 import './whyblak.css'
 
 /* ---------- illustrations ---------- */
@@ -85,42 +92,92 @@ const FEATURES = [
   { no: '04', Illo: QrIllo, title: 'Skip The Queue', desc: 'Walk in with your digital QR ticket. No printing, no waiting required.' },
 ]
 
-function FeatureCard({ f, i }) {
-  const onMove = (e) => {
-    const r = e.currentTarget.getBoundingClientRect()
-    e.currentTarget.style.setProperty('--mx', ((e.clientX - r.left) / r.width - 0.5).toFixed(3))
-    e.currentTarget.style.setProperty('--my', ((e.clientY - r.top) / r.height - 0.5).toFixed(3))
-  }
-  const onLeave = (e) => {
-    e.currentTarget.style.setProperty('--mx', 0)
-    e.currentTarget.style.setProperty('--my', 0)
-  }
+function FeatureCard({ f }) {
+  // inner element carries the mouse tilt + magnetic drift + breathing
+  const tiltRef = useCardTilt({ maxRX: 10, maxRY: 12, lift: 70, magnet: 16 })
+
   return (
-    <article
-      className="why-card"
-      data-reveal
-      data-reveal-delay={(i % 2) + 1}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-    >
-      <span className="why-no">{f.no}</span>
-      <div className="why-stage"><f.Illo /></div>
-      <div className="why-text">
-        <h3>{f.title}</h3>
-        <p>{f.desc}</p>
-      </div>
-    </article>
+    <div className="why-card-outer">
+      <article className="why-card" ref={tiltRef}>
+        <span className="why-card-bg" aria-hidden="true" />
+        <span className="why-card-sweep" aria-hidden="true" />
+        <span className="why-no">{f.no}</span>
+        <div className="why-stage"><f.Illo /></div>
+        <div className="why-text">
+          <h3>{f.title}</h3>
+          <p>{f.desc}</p>
+        </div>
+      </article>
+    </div>
   )
 }
 
 export default function WhyBlak() {
   const logos = [...TRUSTED_LOGOS, ...TRUSTED_LOGOS]
+  const sectionRef = useRef(null)
+  const headRef = useRef(null)
+
+  // cursor spotlight + heading counter-parallax + scroll reveal/parallax
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+    if (prefersReducedMotion()) return
+
+    const gctx = gsap.context(() => {
+      const outers = gsap.utils.toArray('.why-card-outer')
+
+      // ---- scroll entrance (staggered) ----
+      gsap.set(outers, { opacity: 0, y: 100, rotationX: -18, scale: 0.92, filter: 'blur(10px)' })
+      ScrollTrigger.create({
+        trigger: '.why-grid',
+        start: 'top 78%',
+        once: true,
+        onEnter: () => {
+          gsap.to(outers, {
+            opacity: 1, y: 0, rotationX: 0, scale: 1, filter: 'blur(0px)',
+            duration: 1.2, ease: 'power4.out', stagger: 0.14,
+          })
+        },
+      })
+
+      // ---- per-card scroll parallax (different speeds) ----
+      const speeds = [0.9, 1.1, 1.2, 0.85]
+      outers.forEach((o, i) => {
+        gsap.to(o, {
+          yPercent: (speeds[i] - 1) * 26,
+          ease: 'none',
+          scrollTrigger: { trigger: '.why-grid', start: 'top bottom', end: 'bottom top', scrub: 1 },
+        })
+      })
+
+      // ---- cursor spotlight + heading counter-parallax ----
+      if (!isCoarsePointer()) {
+        const hx = gsap.quickTo(headRef.current, 'x', { duration: 1, ease: 'power2.out' })
+        const hy = gsap.quickTo(headRef.current, 'y', { duration: 1, ease: 'power2.out' })
+        const onMove = (e) => {
+          const r = section.getBoundingClientRect()
+          section.style.setProperty('--sx', `${((e.clientX - r.left) / r.width) * 100}%`)
+          section.style.setProperty('--sy', `${((e.clientY - r.top) / r.height) * 100}%`)
+          const px = (e.clientX - r.left) / r.width - 0.5
+          const py = (e.clientY - r.top) / r.height - 0.5
+          hx(px * -12)
+          hy(py * -8)
+        }
+        section.addEventListener('pointermove', onMove)
+        return () => section.removeEventListener('pointermove', onMove)
+      }
+    }, section)
+
+    return () => gctx.revert()
+  }, [])
+
   return (
-    <section className="section why" id="why">
+    <section className="section why" id="why" ref={sectionRef}>
       <span className="why-blob why-blob--1" aria-hidden="true" />
       <span className="why-blob why-blob--2" aria-hidden="true" />
+      <span className="why-spotlight" aria-hidden="true" />
       <div className="container">
-        <header className="sec-head">
+        <header className="sec-head" ref={headRef}>
           <p className="eyebrow" data-reveal>Why BLAK Tickets</p>
           <h2 className="section-title" data-reveal data-reveal-delay="1">
             Why millions choose BLAK Tickets.
@@ -132,7 +189,7 @@ export default function WhyBlak() {
         </header>
 
         <div className="why-grid">
-          {FEATURES.map((f, i) => <FeatureCard key={f.no} f={f} i={i} />)}
+          {FEATURES.map((f) => <FeatureCard key={f.no} f={f} />)}
         </div>
       </div>
 

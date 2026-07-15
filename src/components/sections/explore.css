@@ -173,3 +173,19 @@
   .hub-core { width: 130px; height: 130px; }
   .hub-mark { width: 70px; }
 }
+/* phones: the same orbit, resized to fit */
+@media (max-width: 640px) {
+  .hub {
+    --R: 116px;
+    width: calc(var(--R) * 2 + 92px);
+    height: calc(var(--R) * 2 + 92px);
+    margin-top: var(--s-6);
+  }
+  .bubble { width: 66px; height: 66px; }
+  .cat-card--bubble { width: 66px; height: 66px; }
+  .hub-core { width: 92px; height: 92px; }
+  .hub-mark { width: 50px; }
+  .cat-card--bubble .cat-meta { padding: 6px; padding-bottom: 9px; }
+  .cat-name { font-size: 11px; }
+  .cat-count { font-size: 9px; }
+}

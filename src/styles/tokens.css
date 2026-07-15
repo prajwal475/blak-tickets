@@ -26,6 +26,18 @@
   --emerald-soft: rgba(15, 143, 115, 0.12);
   --emerald-ring: rgba(15, 143, 115, 0.35);
 
+  /* ---- Brick / maroon (button colour) ---- */
+  --brick: #9d2b22;        /* primary buttons             */
+  --brick-2: #7c1e17;      /* hover                       */
+  --brick-soft: rgba(157, 43, 34, 0.10);
+  --brick-ring: rgba(157, 43, 34, 0.32);
+
+  /* ---- Flame (editorial red-orange accent) ---- */
+  --flame: #ff4d2e;        /* editorial orange-red accent */
+  --flame-2: #e23c1f;
+  --char: #111111;         /* editorial black surface     */
+  --studio: #eceae5;       /* light studio canvas         */
+
   /* ---- Typography ---- */
   --font-display: 'Satoshi', 'General Sans', 'Inter', system-ui, sans-serif;
   --font-body: 'General Sans', 'Inter', system-ui, sans-serif;

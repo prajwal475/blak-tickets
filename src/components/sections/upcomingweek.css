@@ -33,7 +33,7 @@
 .up-pill-date { font-family: var(--font-display); font-weight: 700; font-size: 24px; color: var(--ink); }
 .up-pill-count { font-size: 11px; color: var(--muted); }
 .up-pill:hover { transform: translateY(-3px); border-color: var(--emerald); box-shadow: var(--shadow-soft); }
-.up-pill.is-active { background: var(--emerald); border-color: var(--emerald); box-shadow: 0 12px 26px rgba(15,143,115,0.3); }
+.up-pill.is-active { background: var(--brick); border-color: var(--brick); box-shadow: 0 12px 26px var(--brick-ring); }
 .up-pill.is-active .up-pill-dow,
 .up-pill.is-active .up-pill-date,
 .up-pill.is-active .up-pill-count { color: #fff; }
@@ -56,8 +56,8 @@
   color: var(--body);
   transition: all var(--dur) var(--ease);
 }
-.chip:hover { border-color: var(--emerald); color: var(--emerald-2); transform: scale(1.04); }
-.chip.is-active { background: var(--emerald); border-color: var(--emerald); color: #fff; }
+.chip:hover { border-color: var(--brick); color: var(--brick-2); transform: scale(1.04); }
+.chip.is-active { background: var(--brick); border-color: var(--brick); color: #fff; }
 
 /* ---- cards ---- */
 .up-grid {
@@ -128,14 +128,14 @@
   opacity: 0;
   overflow: hidden;
   border-radius: var(--r-btn);
-  background: var(--emerald);
+  background: var(--brick);
   color: #fff;
   font-family: var(--font-display);
   font-weight: 600;
   transition: height var(--dur) var(--ease), opacity var(--dur) var(--ease), background var(--dur) var(--ease);
 }
 .up-card:hover .up-book { height: 44px; opacity: 1; }
-.up-book:hover { background: var(--emerald-2); }
+.up-book:hover { background: var(--brick-2); }
 
 .up-cal { flex-shrink: 0; }
 
@@ -220,7 +220,7 @@
 .up-cal-day:hover:not(:disabled) { background: var(--mint); color: var(--emerald-2); }
 .up-cal-day:disabled { color: var(--disabled); cursor: not-allowed; }
 .up-cal-day.is-today { border-color: var(--emerald); color: var(--emerald-2); }
-.up-cal-day.is-sel { background: var(--emerald); border-color: var(--emerald); color: #fff; }
+.up-cal-day.is-sel { background: var(--brick); border-color: var(--brick); color: #fff; }
 
 @media (max-width: 640px) {
   .up-cal-wrap { align-self: stretch; }

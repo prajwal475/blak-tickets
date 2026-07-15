@@ -12,9 +12,8 @@
   opacity: 1;
 }
 .intro-video {
-  width: min(82vmin, 640px);
+  width: min(88vw, 720px);
   height: auto;
-  aspect-ratio: 1 / 1;
   object-fit: contain;
   transform: scale(0.96);
   transition: transform 600ms var(--ease);

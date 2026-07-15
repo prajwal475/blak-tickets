@@ -1,6 +1,6 @@
 // /explore — a grid of every category, and /category/:slug — the events within
 // one category. Both reuse the .doc page header from content.css.
-import { useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from '../../lib/router'
 import { CATEGORIES } from '../../config/categories'
 import { EVENTS } from '../../config/events'
@@ -27,6 +27,43 @@ function PageHead({ eyebrow, title, lead }) {
         {lead && <p className="doc-lead">{lead}</p>}
       </div>
     </header>
+  )
+}
+
+export function AllEventsPage() {
+  useTitle('All events')
+  const cats = useMemo(
+    () => ['All', ...CATEGORIES.map((c) => c.label).filter((l) => EVENTS.some((e) => e.category === l))],
+    []
+  )
+  const [active, setActive] = useState('All')
+  const list = active === 'All' ? EVENTS : EVENTS.filter((e) => e.category === active)
+
+  return (
+    <article className="doc">
+      <PageHead
+        eyebrow="Events"
+        title="All events."
+        lead="Every experience on BLAK Tickets — concerts, sports, comedy, festivals and more."
+      />
+      <div className="container cat-page">
+        <div className="ev-filters" role="tablist" aria-label="Filter by category">
+          {cats.map((c) => (
+            <button
+              key={c}
+              className={`ev-filter${active === c ? ' is-active' : ''}`}
+              aria-pressed={active === c}
+              onClick={() => setActive(c)}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+        <div className="ev-grid">
+          {list.map((e) => <EventCard key={e.id} e={e} />)}
+        </div>
+      </div>
+    </article>
   )
 }
 
