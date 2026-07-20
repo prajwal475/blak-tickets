@@ -7,11 +7,12 @@
 import { useEffect, useRef } from 'react'
 import Button from '../ui/Button'
 import { TRUSTED_LOGOS } from '../../config/testimonials'
-import { track } from '../../lib/analytics'
+import { track } from '../../lib/tracking'
 import { openApp } from '../../lib/app'
 import { gsap, ScrollTrigger } from '../../lib/gsap'
 import { useCardTilt } from '../../hooks/useCardTilt'
 import { prefersReducedMotion, isCoarsePointer } from '../../lib/capabilities'
+import BookingSequence from './BookingSequence'
 import './whyblak.css'
 
 /* ---------- illustrations ---------- */
@@ -187,7 +188,11 @@ export default function WhyBlak() {
             securely, instantly and effortlessly.
           </p>
         </header>
+      </div>
 
+      <BookingSequence />
+
+      <div className="container">
         <div className="why-grid">
           {FEATURES.map((f) => <FeatureCard key={f.no} f={f} />)}
         </div>

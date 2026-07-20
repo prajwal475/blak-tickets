@@ -9,7 +9,7 @@ import NotFound from './components/pages/NotFound'
 import { resolveRoute } from './components/pages/pages'
 import { useReveal } from './hooks/useReveal'
 import { initLenis, destroyLenis } from './lib/lenis'
-import { initScrollDepth } from './lib/analytics'
+import { initScrollDepth } from './lib/tracking'
 import { shouldRenderRich } from './lib/capabilities'
 import { useRouter } from './lib/router'
 

@@ -1,4 +1,4 @@
-.why { position: relative; overflow: hidden; }
+.why { position: relative; overflow: clip; }
 .why .container { position: relative; z-index: 1; }
 .why-blob {
   position: absolute;

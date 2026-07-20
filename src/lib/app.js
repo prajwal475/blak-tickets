@@ -1,5 +1,5 @@
 // App-store handoff. URLs are PLACEHOLDERS — replace at launch.
-import { track } from './analytics'
+import { track } from './tracking'
 
 export const STORE = {
   ios: 'https://apps.apple.com/app/idPLACEHOLDER',

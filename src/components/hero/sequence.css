@@ -1,7 +1,9 @@
-/* ---- Full-bleed scroll-scrubbed booking sequence ---- */
+/* ---- Full-bleed scroll-scrubbed event sequence ---- */
 .seq {
+  --sequence-bg: #fdfdfd;
   position: relative;
-  height: 340vh;            /* longer scroll distance => slower scrub */
+  height: 580vh;
+  background: var(--sequence-bg);
 }
 .seq-stage {
   position: sticky;
@@ -9,60 +11,94 @@
   height: 100vh;
   width: 100%;
   overflow: hidden;
-  background: #d4cdc0;      /* fallback ~ the clip's warm studio backdrop */
+  background: var(--sequence-bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 1400px;      /* gives the phone a real 3D tilt on parallax */
+  perspective: 1400px;
 }
-/* blurred ambient backdrop fills the full width seamlessly... */
-.seq-bg {
+.seq-stage::before {
+  content: '';
   position: absolute;
-  inset: -12%;
-  background-size: cover;
-  background-position: center;
-  filter: blur(54px) saturate(1.05) brightness(0.96);
-  transform: scale(1.12);
+  inset: 0;
   z-index: 0;
-  will-change: transform;
+  background: var(--sequence-bg);
 }
-/* ...while the foreground shows the whole frame, never cropped/zoomed */
+/* Foreground keeps the landscape source ratio instead of stretching to screen. */
 .seq-canvas {
   position: relative;
   z-index: 1;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
+  width: min(100vw, 177.78vh);
+  height: auto;
+  max-width: none;
+  max-height: 100vh;
+  aspect-ratio: 16 / 9;
   display: block;
 }
-.seq-cap {
-  position: absolute;
-  z-index: 2;
-  left: 24px;
-  bottom: 24px;
-  max-width: 58%;
-  text-align: left;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  color: rgba(24, 24, 24, 0.6);
-  pointer-events: none;
-}
-/* brand mark on the booking scene — bottom-right corner */
-.seq-logo {
+.seq-copy {
   position: absolute;
   z-index: 3;
-  bottom: 22px;
-  right: 26px;
-  height: 30px;
-  width: auto;
-  opacity: 0.92;
+  top: 50%;
+  left: 50%;
+  width: min(1080px, calc(100vw - 40px));
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform;
+}
+.seq-copy .hero-title {
+  max-width: none;
+}
+.seq-title-line,
+.seq-lead-line {
+  display: block;
+}
+.seq-copy-mask {
+  display: block;
+  overflow: hidden;
+  overflow: clip;
+  will-change: transform;
+}
+.seq-copy-row {
+  display: block;
+  will-change: transform, opacity, filter;
+}
+.seq-accent-word {
+  display: inline-block;
+  transform-origin: center bottom;
+  will-change: transform, text-shadow;
+}
+.seq-copy .hero-title,
+.seq-copy .hero-lead,
+.seq-copy .eyebrow {
+  text-shadow: 0 1px 18px rgba(255, 255, 255, 0.94);
+}
+.seq-cta {
+  position: absolute;
+  z-index: 4;
+  bottom: clamp(28px, 4vw, 48px);
+  left: 50%;
+  width: max-content;
+  transform: translateX(-50%);
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
+  will-change: transform, opacity;
 }
 @media (max-width: 640px) {
-  .seq-logo { bottom: 16px; right: 16px; height: 24px; }
-  .seq-cap { font-size: 12px; max-width: 52%; }
+  .seq-copy { width: calc(100vw - 32px); }
+  .seq-copy .hero-title { max-width: 16ch; }
+  .seq-cta {
+    right: 20px;
+    bottom: 24px;
+    left: 20px;
+    width: auto;
+    transform: none;
+  }
+  .hero-cta.seq-cta { width: auto; }
+  .seq-cta .btn { flex: 1; }
 }
 
 /* reduced-motion: no pin/scrub — show a single representative frame */
@@ -72,16 +108,31 @@
 .seq--static .seq-stage {
   position: relative;
   height: auto;
+  min-height: 100vh;
   padding-block: var(--s-10);
+  flex-direction: column;
+  gap: var(--s-4);
 }
+.seq--static .seq-copy,
+.seq--static .seq-cta {
+  position: relative;
+  inset: auto;
+  transform: none;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.seq--static .seq-copy { order: 1; }
 .seq--static .seq-canvas {
-  width: min(320px, 72vw);
+  order: 2;
+  width: min(960px, 92vw);
   height: auto;
-  aspect-ratio: 800 / 1422;
-  border-radius: 28px;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
   box-shadow: var(--shadow-card);
 }
+.seq--static .seq-cta { order: 3; }
 
 @media (max-width: 640px) {
-  .seq { height: 280vh; }
+  .seq { height: 470vh; }
+  .seq:not(.seq--static) .seq-canvas { width: min(220vw, 102vh); }
 }

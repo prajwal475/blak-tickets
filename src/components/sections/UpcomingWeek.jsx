@@ -4,7 +4,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Button from '../ui/Button'
 import { EVENTS } from '../../config/events'
-import { track } from '../../lib/analytics'
+import { track } from '../../lib/tracking'
 import { openApp } from '../../lib/app'
 import './upcomingweek.css'
 

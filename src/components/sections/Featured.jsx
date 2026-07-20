@@ -6,7 +6,7 @@
 import { useEffect, useRef } from 'react'
 import { FEATURED } from '../../config/events'
 import { openApp } from '../../lib/app'
-import { track } from '../../lib/analytics'
+import { track } from '../../lib/tracking'
 import { useRouter } from '../../lib/router'
 import { gsap } from '../../lib/gsap'
 import { prefersReducedMotion } from '../../lib/capabilities'

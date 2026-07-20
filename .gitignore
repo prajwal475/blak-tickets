@@ -9,6 +9,8 @@ dist-ssr
 # large source media kept out of the repo
 imagge/
 *.mp4
+public/hero/seq/ezgif-frame-*.png
+public/hero/seq/frame-*.jpg
 # ...but the intro splash clip is needed at runtime
 !public/intro/intro.mp4
 

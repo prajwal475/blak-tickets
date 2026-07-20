@@ -6,7 +6,7 @@ import { useMemo } from 'react'
 import Logo from '../layout/Logo'
 import Button from '../ui/Button'
 import { CATEGORIES } from '../../config/categories'
-import { track } from '../../lib/analytics'
+import { track } from '../../lib/tracking'
 import { useRouter } from '../../lib/router'
 import './explore.css'
 

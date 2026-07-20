@@ -1,0 +1,58 @@
+.booking-seq {
+  position: relative;
+  height: 500vh;
+  margin-top: var(--s-6);
+  background: #000;
+}
+
+.booking-seq-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  perspective: 1400px;
+  background: #000;
+}
+
+.booking-seq-canvas {
+  position: relative;
+  z-index: 1;
+  width: min(100vw, 177.78vh);
+  height: auto;
+  max-width: none;
+  max-height: 100vh;
+  aspect-ratio: 16 / 9;
+  display: block;
+  will-change: transform;
+}
+
+.booking-seq--static {
+  height: auto;
+}
+
+.booking-seq--static .booking-seq-stage {
+  position: relative;
+  height: auto;
+  padding-block: var(--s-8);
+}
+
+.booking-seq--static .booking-seq-canvas {
+  width: min(1120px, 92vw);
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+}
+
+@media (max-width: 640px) {
+  .booking-seq {
+    height: 420vh;
+    margin-top: var(--s-4);
+  }
+
+  .booking-seq:not(.booking-seq--static) .booking-seq-canvas {
+    width: min(180vw, 177.78vh);
+  }
+}
