@@ -145,6 +145,10 @@
 .seq--static .seq-cta { order: 3; }
 
 @media (max-width: 640px) {
-  .seq { height: 470vh; }
+  .seq {
+    height: 540vh;
+    height: 540svh;
+  }
+  .seq-stage { height: 100svh; }
   .seq:not(.seq--static) .seq-canvas { width: min(150vw, 78vh); }
 }

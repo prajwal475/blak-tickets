@@ -12,7 +12,8 @@ import './sequence.css'
 const FRAME_COUNT = 239
 const PRELOAD_RADIUS = 14
 const CACHE_RADIUS = 24
-const framePath = (i) => `/landing-seq/frame-${String(i + 1).padStart(3, '0')}.jpg`
+const desktopFramePath = (i) => `/landing-seq/frame-${String(i + 1).padStart(3, '0')}.jpg`
+const mobileFramePath = (i) => `/landing-seq-mobile/frame-${String(i + 1).padStart(3, '0')}.webp`
 
 export default function HeroSequence() {
   const sectionRef = useRef(null)
@@ -28,61 +29,137 @@ export default function HeroSequence() {
     if (!canvas || !section) return
     const ctx = canvas.getContext('2d')
 
+    const framePath = window.matchMedia('(max-width: 760px)').matches
+      ? mobileFramePath
+      : desktopFramePath
     const images = new Map()
     let current = -1
-    let requested = 0
+    let target = 0
+    let rendering = false
+    let alive = true
+    let paintFrame = 0
 
     const draw = (i) => {
-      const img = images.get(i)
-      if (!img || !img.complete || img.naturalWidth === 0) return
+      const entry = images.get(i)
+      const img = entry?.img
+      if (!img || !img.complete || img.naturalWidth === 0) return false
       if (canvas.width !== img.naturalWidth) {
         canvas.width = img.naturalWidth
         canvas.height = img.naturalHeight
       }
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
       current = i
+      canvas.dataset.frame = String(i + 1)
+      return true
     }
 
     const load = (i) => {
-      if (i < 0 || i >= FRAME_COUNT || images.has(i)) return
+      if (i < 0 || i >= FRAME_COUNT) return Promise.resolve(false)
+      const cached = images.get(i)
+      if (cached) return cached.ready
+
       const img = new Image()
       img.decoding = 'async'
-      img.onload = () => { if (requested === i) draw(i) }
+      img.fetchPriority = Math.abs(i - current) <= 3 ? 'high' : 'low'
+      const ready = new Promise((resolve) => {
+        img.onload = () => resolve(true)
+        img.onerror = () => resolve(false)
+      })
       img.src = framePath(i)
-      images.set(i, img)
+      images.set(i, { img, ready })
+      return ready
     }
 
-    const requestFrame = (i) => {
-      const next = Math.max(0, Math.min(FRAME_COUNT - 1, i))
-      if (next === requested && current === next) return
-      requested = next
-      load(requested)
-      draw(requested)
-
+    const preloadAroundCurrent = () => {
+      const center = Math.max(0, current)
+      const direction = Math.sign(target - center) || 1
       for (let offset = 1; offset <= PRELOAD_RADIUS; offset++) {
-        load(requested + offset)
-        load(requested - offset)
+        load(center + direction * offset)
       }
+      for (let offset = 1; offset <= 3; offset++) load(center - direction * offset)
+    }
 
-      if (images.size > CACHE_RADIUS * 2 + 1) {
-        for (const [index, img] of images) {
-          if (Math.abs(index - requested) > CACHE_RADIUS) {
-            img.onload = null
-            images.delete(index)
-          }
+    const trimCache = () => {
+      if (images.size <= CACHE_RADIUS * 2 + 1) return
+      for (const [index, entry] of images) {
+        if (Math.abs(index - current) > CACHE_RADIUS) {
+          entry.img.onload = null
+          entry.img.onerror = null
+          images.delete(index)
         }
       }
     }
 
+    const nextPaint = () => new Promise((resolve) => {
+      paintFrame = window.requestAnimationFrame(resolve)
+    })
+
+    const renderToTarget = async () => {
+      if (rendering || !alive) return
+      rendering = true
+
+      while (alive && current !== target) {
+        const next = current < 0 ? 0 : current + Math.sign(target - current)
+        const loaded = await load(next)
+        if (!alive) break
+        if (loaded) draw(next)
+        else current = next
+        preloadAroundCurrent()
+        trimCache()
+        await nextPaint()
+      }
+
+      rendering = false
+      if (alive && current !== target) renderToTarget()
+    }
+
+    const requestFrame = (i) => {
+      target = Math.max(0, Math.min(FRAME_COUNT - 1, i))
+      preloadAroundCurrent()
+      renderToTarget()
+    }
+
     if (reduced) {
       const mid = Math.floor(FRAME_COUNT * 0.55)
-      requested = mid
-      load(mid)
-      draw(mid)
-      return
+      target = mid
+      load(mid).then(() => draw(mid))
+      return () => { alive = false }
     }
 
     requestFrame(0)
+
+    let warming = false
+    let warmHandle = null
+    let warmUsesIdleCallback = false
+    const warmController = new AbortController()
+
+    const warmFrames = async () => {
+      if (warming) return
+      warming = true
+      let cursor = 0
+      const workers = Array.from({ length: 4 }, async () => {
+        while (alive && cursor < FRAME_COUNT) {
+          const index = cursor++
+          try {
+            const response = await fetch(framePath(index), {
+              cache: 'force-cache',
+              signal: warmController.signal,
+            })
+            await response.blob()
+          } catch {
+            if (warmController.signal.aborted) return
+          }
+        }
+      })
+      await Promise.all(workers)
+    }
+
+    if ('requestIdleCallback' in window) {
+      warmUsesIdleCallback = true
+      warmHandle = window.requestIdleCallback(warmFrames, { timeout: 1200 })
+    } else {
+      warmHandle = window.setTimeout(warmFrames, 250)
+    }
 
     const stage = stageRef.current
     const copy = copyRef.current
@@ -128,7 +205,15 @@ export default function HeroSequence() {
         const availableHeight = window.innerHeight - 172
         return Math.max(0.68, Math.min(0.84, availableHeight / renderedHeight))
       }
-      const finalCanvasY = () => window.innerWidth > 760 ? -4 : canvasBaseY()
+      const finalCanvasY = () => {
+        if (window.innerWidth <= 760 || !cta) return canvasBaseY()
+        const renderedHeight = Math.min(window.innerHeight, window.innerWidth * 9 / 16)
+        const finalHeight = renderedHeight * finalCanvasScale()
+        const naturalBottom = (window.innerHeight + finalHeight) / 2
+        const targetBottom = cta.getBoundingClientRect().top - 30
+        const gapOffset = -((naturalBottom - targetBottom) / renderedHeight) * 100
+        return Math.max(-1.5, gapOffset)
+      }
 
       gsap.set(canvas, { autoAlpha: 1, scale: 1, xPercent: canvasBaseX, yPercent: canvasBaseY })
       gsap.set(copyRows, { yPercent: 0, autoAlpha: 1, filter: 'blur(0px)' })
@@ -147,7 +232,7 @@ export default function HeroSequence() {
           trigger: section,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.65,
+          scrub: 0.35,
           invalidateOnRefresh: true,
         },
       })
@@ -240,7 +325,16 @@ export default function HeroSequence() {
     }, section)
 
     ScrollTrigger.refresh()
-    return () => gctx.revert()
+    return () => {
+      alive = false
+      window.cancelAnimationFrame(paintFrame)
+      if (warmHandle !== null) {
+        if (warmUsesIdleCallback) window.cancelIdleCallback(warmHandle)
+        else window.clearTimeout(warmHandle)
+      }
+      warmController.abort()
+      gctx.revert()
+    }
   }, [reduced])
 
   return (

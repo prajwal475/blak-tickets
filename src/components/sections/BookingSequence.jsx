@@ -4,11 +4,10 @@ import { prefersReducedMotion } from '../../lib/capabilities'
 import './booking-sequence.css'
 
 const FRAME_COUNT = 300
-const PRELOAD_RADIUS = 5
-const CACHE_RADIUS = 9
-const MOBILE_PRELOAD_RADIUS = 10
-const MOBILE_CACHE_RADIUS = 14
-const framePath = (i) => `/hero/seq/booking-frame-${String(i + 1).padStart(3, '0')}.webp`
+const PRELOAD_RADIUS = 14
+const CACHE_RADIUS = 24
+const desktopFramePath = (i) => `/hero/seq/booking-frame-${String(i + 1).padStart(3, '0')}.webp`
+const mobileFramePath = (i) => `/hero/seq-mobile/booking-frame-${String(i + 1).padStart(3, '0')}.webp`
 
 export default function BookingSequence() {
   const sectionRef = useRef(null)
@@ -23,21 +22,22 @@ export default function BookingSequence() {
     if (!section || !stage || !canvas) return
 
     const ctx = canvas.getContext('2d')
-    const mobile = window.matchMedia('(max-width: 760px)').matches
-    const preloadRadius = mobile ? MOBILE_PRELOAD_RADIUS : PRELOAD_RADIUS
-    const cacheRadius = mobile ? MOBILE_CACHE_RADIUS : CACHE_RADIUS
+    const framePath = window.matchMedia('(max-width: 760px)').matches
+      ? mobileFramePath
+      : desktopFramePath
     const images = new Map()
     let current = -1
-    let requested = 0
+    let target = 0
+    let rendering = false
     let alive = true
     let warming = false
+    let paintFrame = 0
     const warmController = new AbortController()
 
-    const isReady = (img) => !!img?.complete && img.naturalWidth > 0
-
     const draw = (i) => {
-      const img = images.get(i)
-      if (!img || !img.complete || img.naturalWidth === 0) return
+      const entry = images.get(i)
+      const img = entry?.img
+      if (!img || !img.complete || img.naturalWidth === 0) return false
       if (canvas.width !== img.naturalWidth) {
         canvas.width = img.naturalWidth
         canvas.height = img.naturalHeight
@@ -45,88 +45,84 @@ export default function BookingSequence() {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
       current = i
       canvas.dataset.frame = String(i + 1)
+      return true
     }
 
     const load = (i) => {
-      if (i < 0 || i >= FRAME_COUNT || images.has(i)) return
+      if (i < 0 || i >= FRAME_COUNT) return Promise.resolve(false)
+      const cached = images.get(i)
+      if (cached) return cached.ready
+
       const img = new Image()
       img.decoding = 'async'
-      img.fetchPriority = Math.abs(i - requested) <= 2 ? 'high' : 'low'
-      img.onload = () => {
-        if (requested === i) {
-          draw(i)
-          return
-        }
-
-        const exact = images.get(requested)
-        if (!isReady(exact) && (current < 0 || Math.abs(i - requested) < Math.abs(current - requested))) {
-          draw(i)
-        }
-      }
+      img.fetchPriority = Math.abs(i - current) <= 3 ? 'high' : 'low'
+      const ready = new Promise((resolve) => {
+        img.onload = () => resolve(true)
+        img.onerror = () => resolve(false)
+      })
       img.src = framePath(i)
-      images.set(i, img)
+      images.set(i, { img, ready })
+      return ready
     }
 
-    const drawNearest = (target) => {
-      const exact = images.get(target)
-      if (isReady(exact)) {
-        draw(target)
-        return
+    const preloadAroundCurrent = () => {
+      const center = Math.max(0, current)
+      const direction = Math.sign(target - center) || 1
+      for (let offset = 1; offset <= PRELOAD_RADIUS; offset++) {
+        load(center + direction * offset)
+      }
+      for (let offset = 1; offset <= 3; offset++) load(center - direction * offset)
+    }
+
+    const trimCache = () => {
+      if (images.size <= CACHE_RADIUS * 2 + 1) return
+      for (const [index, entry] of images) {
+        if (Math.abs(index - current) > CACHE_RADIUS) {
+          entry.img.onload = null
+          entry.img.onerror = null
+          images.delete(index)
+        }
+      }
+    }
+
+    const nextPaint = () => new Promise((resolve) => {
+      paintFrame = window.requestAnimationFrame(resolve)
+    })
+
+    const renderToTarget = async () => {
+      if (rendering || !alive) return
+      rendering = true
+
+      while (alive && current !== target) {
+        const next = current < 0 ? 0 : current + Math.sign(target - current)
+        const loaded = await load(next)
+        if (!alive) break
+        if (loaded) draw(next)
+        else current = next
+        preloadAroundCurrent()
+        trimCache()
+        await nextPaint()
       }
 
-      for (let offset = 1; offset <= cacheRadius; offset++) {
-        const before = images.get(target - offset)
-        if (isReady(before)) {
-          draw(target - offset)
-          return
-        }
-        const after = images.get(target + offset)
-        if (isReady(after)) {
-          draw(target + offset)
-          return
-        }
-      }
+      rendering = false
+      if (alive && current !== target) renderToTarget()
     }
 
     const requestFrame = (i) => {
-      const next = Math.max(0, Math.min(FRAME_COUNT - 1, i))
-      if (next === requested && current === next) return
-      requested = next
-      load(requested)
-      drawNearest(requested)
-
-      for (let offset = 1; offset <= preloadRadius; offset++) {
-        load(requested + offset)
-        load(requested - offset)
-      }
-
-      if (images.size > cacheRadius * 2 + 1) {
-        for (const [index, img] of images) {
-          if (Math.abs(index - requested) > cacheRadius) {
-            img.onload = null
-            images.delete(index)
-          }
-        }
-      }
+      target = Math.max(0, Math.min(FRAME_COUNT - 1, i))
+      preloadAroundCurrent()
+      renderToTarget()
     }
 
-    // Warm the browser's compressed HTTP cache before this lower-page sequence
-    // reaches the viewport. Nearby Image objects remain bounded to protect
-    // mobile memory while subsequent frame decodes become local and immediate.
+    // Warm the compressed browser cache in exact frame order before this
+    // lower-page sequence enters view. Decoded images stay in a bounded window.
     const warmFrames = async () => {
-      if (!mobile || warming) return
+      if (warming) return
       warming = true
-      const keyframes = Array.from({ length: FRAME_COUNT }, (_, i) => i)
-        .filter((i) => i % 10 === 0 || i === FRAME_COUNT - 1)
-      const keyframeSet = new Set(keyframes)
-      const warmOrder = [
-        ...keyframes,
-        ...Array.from({ length: FRAME_COUNT }, (_, i) => i).filter((i) => !keyframeSet.has(i)),
-      ]
       let cursor = 0
       const workers = Array.from({ length: 4 }, async () => {
-        while (alive && cursor < warmOrder.length) {
-          const index = warmOrder[cursor++]
+        while (alive && cursor < FRAME_COUNT) {
+          const index = cursor++
           try {
             const response = await fetch(framePath(index), {
               cache: 'force-cache',
@@ -142,21 +138,20 @@ export default function BookingSequence() {
     }
 
     let warmObserver = null
-    if (mobile && 'IntersectionObserver' in window) {
+    if ('IntersectionObserver' in window) {
       warmObserver = new IntersectionObserver((entries) => {
         if (!entries.some((entry) => entry.isIntersecting)) return
         warmObserver?.disconnect()
         warmFrames()
       }, { rootMargin: '500% 0px' })
       warmObserver.observe(section)
-    } else if (mobile) {
+    } else {
       warmFrames()
     }
 
     if (reduced) {
-      requested = Math.floor(FRAME_COUNT * 0.55)
-      load(requested)
-      draw(requested)
+      target = Math.floor(FRAME_COUNT * 0.55)
+      load(target).then(() => draw(target))
       return () => {
         alive = false
         warmObserver?.disconnect()
@@ -176,7 +171,7 @@ export default function BookingSequence() {
           trigger: section,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: mobile ? 1.15 : 0.7,
+          scrub: 0.35,
           invalidateOnRefresh: true,
         },
       })
@@ -215,6 +210,7 @@ export default function BookingSequence() {
     ScrollTrigger.refresh()
     return () => {
       alive = false
+      window.cancelAnimationFrame(paintFrame)
       warmObserver?.disconnect()
       warmController.abort()
       gctx.revert()
