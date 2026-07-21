@@ -22,7 +22,7 @@ const VARIANT = ['dark', 'light', 'flame', 'dark', 'light', 'dark', 'flame']
 
 const baseTilt = () => {
   const w = typeof window !== 'undefined' ? window.innerWidth : 1440
-  if (w <= 640) return { rx: 3, ry: -6, k: 6 }
+  if (w <= 640) return { rx: 0, ry: 0, k: 0 }
   if (w <= 900) return { rx: 4, ry: -9, k: 9 }
   return { rx: 6, ry: -13, k: 12 }
 }

@@ -29,6 +29,7 @@ export default function RealMap({
     const map = L.map(el, {
       center,
       zoom,
+      attributionControl: false,
       zoomControl: interactive,
       scrollWheelZoom: false,
       dragging: interactive,

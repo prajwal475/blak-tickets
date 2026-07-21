@@ -202,8 +202,28 @@
 }
 @media (max-width: 640px) {
   .feat-scene { padding-block: 28px 24px; }
-  .feat-stage { transform: rotateX(3deg) rotateY(-6deg); }
-  .ev-card { width: 78vw; }
+  .feat-stage { transform: none; }
+  .ev-card {
+    width: min(78vw, 320px);
+    transform: translateY(var(--ty, 0));
+  }
+  .ev-face {
+    box-sizing: border-box;
+    height: 548px;
+  }
+  .ev-body { min-height: 94px; }
+  .ev-title {
+    min-height: 2.08em;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .ev-where {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .ev-num { font-size: 44px; }
 }
 

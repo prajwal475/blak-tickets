@@ -30,11 +30,6 @@
 .realmap .leaflet-popup-content-wrapper {
   border-radius: 12px;
 }
-.realmap .leaflet-control-attribution {
-  font-size: 10px;
-  background: rgba(255, 255, 255, 0.7);
-}
-
 /* glowing, pulsing markers */
 .map-glow { position: relative; }
 .map-glow-dot {

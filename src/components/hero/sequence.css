@@ -92,13 +92,25 @@
   .seq-copy .hero-title { max-width: 16ch; }
   .seq-cta {
     right: 20px;
-    bottom: 24px;
+    bottom: calc(140px + env(safe-area-inset-bottom, 0px));
     left: 20px;
     width: auto;
     transform: none;
   }
   .hero-cta.seq-cta { width: auto; }
   .seq-cta .btn { flex: 1; }
+}
+@media (max-width: 380px) {
+  .seq-copy { width: 440px; }
+  .seq-cta {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  .seq-cta .btn {
+    min-width: 0;
+    padding: 12px 10px;
+    font-size: 12px;
+  }
 }
 
 /* reduced-motion: no pin/scrub — show a single representative frame */
@@ -134,5 +146,5 @@
 
 @media (max-width: 640px) {
   .seq { height: 470vh; }
-  .seq:not(.seq--static) .seq-canvas { width: min(220vw, 102vh); }
+  .seq:not(.seq--static) .seq-canvas { width: min(150vw, 78vh); }
 }

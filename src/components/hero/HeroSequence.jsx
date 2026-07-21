@@ -95,7 +95,10 @@ export default function HeroSequence() {
     const gctx = gsap.context(() => {
       const frame = { value: 0 }
       const maskDrop = 14
-      const copyScale = () => window.innerWidth > 760 ? 0.54 : 0.66
+      const copyScale = () => {
+        if (window.innerWidth > 760) return 0.54
+        return window.innerWidth <= 380 ? 0.3 : 0.5
+      }
       const copyX = () => {
         if (!copy) return 0
         const scale = copyScale()
@@ -105,19 +108,29 @@ export default function HeroSequence() {
       const copyY = () => {
         if (!copy) return 0
         const scale = copyScale()
-        const bottom = window.innerWidth > 760 ? 320 : 270
+        const bottom = window.innerWidth > 760
+          ? 320
+          : window.innerWidth <= 380
+            ? Math.min(300, window.innerHeight * 0.45)
+            : 300
         const downwardOffset = window.innerHeight * (window.innerWidth > 760 ? 0.22 : 0.045)
-        return window.innerHeight - bottom - (copy.offsetHeight * scale) / 2 - window.innerHeight / 2 + downwardOffset
+        const compactOffset = window.innerWidth <= 380 ? 105 : 0
+        return window.innerHeight - bottom - (copy.offsetHeight * scale) / 2 - window.innerHeight / 2 + downwardOffset + compactOffset
       }
       const canvasBaseX = () => 0
+      const canvasBaseY = () => {
+        if (window.innerWidth > 760) return 0
+        return window.innerWidth > 320 && window.innerWidth <= 380 ? -45 : -32
+      }
       const finalCanvasScale = () => {
         if (window.innerWidth <= 760) return 0.9
         const renderedHeight = Math.min(window.innerHeight, window.innerWidth * 9 / 16)
         const availableHeight = window.innerHeight - 172
         return Math.max(0.68, Math.min(0.84, availableHeight / renderedHeight))
       }
+      const finalCanvasY = () => window.innerWidth > 760 ? -4 : canvasBaseY()
 
-      gsap.set(canvas, { autoAlpha: 1, scale: 1, xPercent: canvasBaseX, yPercent: 0 })
+      gsap.set(canvas, { autoAlpha: 1, scale: 1, xPercent: canvasBaseX, yPercent: canvasBaseY })
       gsap.set(copyRows, { yPercent: 0, autoAlpha: 1, filter: 'blur(0px)' })
       gsap.set(copy, {
         autoAlpha: 0,
@@ -186,7 +199,7 @@ export default function HeroSequence() {
         }, 4.7)
         .to(canvas, {
           scale: finalCanvasScale,
-          y: 0,
+          yPercent: finalCanvasY,
           duration: 0.55,
           ease: 'power2.inOut',
         }, 4.82)
@@ -208,14 +221,15 @@ export default function HeroSequence() {
       // Pointer parallax gives the foreground scene a restrained 3D response.
       const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches
       if (!canHover || !stage) return
+      const restingCanvasY = () => timeline.progress() >= 0.82 ? finalCanvasY() : canvasBaseY()
       const onMove = (ev) => {
         const r = stage.getBoundingClientRect()
         const px = (ev.clientX - r.left) / r.width - 0.5
         const py = (ev.clientY - r.top) / r.height - 0.5
-        gsap.to(canvas, { xPercent: canvasBaseX() + px * 4, yPercent: py * 3, rotateY: px * 4, rotateX: -py * 3, duration: 0.9, ease: 'power2.out' })
+        gsap.to(canvas, { xPercent: canvasBaseX() + px * 4, yPercent: restingCanvasY() + py * 3, rotateY: px * 4, rotateX: -py * 3, duration: 0.9, ease: 'power2.out' })
       }
       const reset = () => {
-        gsap.to(canvas, { xPercent: canvasBaseX(), yPercent: 0, rotateY: 0, rotateX: 0, duration: 1.1, ease: 'power2.out' })
+        gsap.to(canvas, { xPercent: canvasBaseX(), yPercent: restingCanvasY(), rotateY: 0, rotateX: 0, duration: 1.1, ease: 'power2.out' })
       }
       stage.addEventListener('pointermove', onMove)
       stage.addEventListener('pointerleave', reset)
