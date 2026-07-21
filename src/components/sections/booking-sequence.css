@@ -48,8 +48,13 @@
 
 @media (max-width: 640px) {
   .booking-seq {
-    height: 420vh;
+    height: 650vh;
+    height: 650svh;
     margin-top: var(--s-4);
+  }
+
+  .booking-seq-stage {
+    height: 100svh;
   }
 
   .booking-seq:not(.booking-seq--static) .booking-seq-canvas {
