@@ -22,12 +22,14 @@ export default function BookingSequence() {
     if (!section || !stage || !canvas) return
 
     const ctx = canvas.getContext('2d')
-    const framePath = window.matchMedia('(max-width: 760px)').matches
+    const mobile = window.matchMedia('(max-width: 760px)').matches
+    const framePath = mobile
       ? mobileFramePath
       : desktopFramePath
     const images = new Map()
     let current = -1
     let target = 0
+    let requested = 0
     let rendering = false
     let alive = true
     let warming = false
@@ -48,6 +50,32 @@ export default function BookingSequence() {
       return true
     }
 
+    const isReady = (entry) => {
+      const img = entry?.img
+      return !!img?.complete && img.naturalWidth > 0
+    }
+
+    const drawNearest = (frameIndex) => {
+      const exact = images.get(frameIndex)
+      if (isReady(exact)) {
+        draw(frameIndex)
+        return
+      }
+
+      for (let offset = 1; offset <= CACHE_RADIUS; offset++) {
+        const before = images.get(frameIndex - offset)
+        if (isReady(before)) {
+          draw(frameIndex - offset)
+          return
+        }
+        const after = images.get(frameIndex + offset)
+        if (isReady(after)) {
+          draw(frameIndex + offset)
+          return
+        }
+      }
+    }
+
     const load = (i) => {
       if (i < 0 || i >= FRAME_COUNT) return Promise.resolve(false)
       const cached = images.get(i)
@@ -55,9 +83,20 @@ export default function BookingSequence() {
 
       const img = new Image()
       img.decoding = 'async'
-      img.fetchPriority = Math.abs(i - current) <= 3 ? 'high' : 'low'
+      img.fetchPriority = Math.abs(i - (mobile ? requested : current)) <= 3 ? 'high' : 'low'
       const ready = new Promise((resolve) => {
-        img.onload = () => resolve(true)
+        img.onload = () => {
+          resolve(true)
+          if (!alive || !mobile) return
+          if (requested === i) {
+            draw(i)
+            return
+          }
+          const exact = images.get(requested)
+          if (!isReady(exact) && (current < 0 || Math.abs(i - requested) < Math.abs(current - requested))) {
+            drawNearest(requested)
+          }
+        }
         img.onerror = () => resolve(false)
       })
       img.src = framePath(i)
@@ -66,18 +105,20 @@ export default function BookingSequence() {
     }
 
     const preloadAroundCurrent = () => {
-      const center = Math.max(0, current)
+      const center = Math.max(0, mobile ? requested : current)
       const direction = Math.sign(target - center) || 1
       for (let offset = 1; offset <= PRELOAD_RADIUS; offset++) {
         load(center + direction * offset)
       }
-      for (let offset = 1; offset <= 3; offset++) load(center - direction * offset)
+      const trailingRadius = mobile ? PRELOAD_RADIUS : 3
+      for (let offset = 1; offset <= trailingRadius; offset++) load(center - direction * offset)
     }
 
     const trimCache = () => {
       if (images.size <= CACHE_RADIUS * 2 + 1) return
+      const center = mobile ? requested : current
       for (const [index, entry] of images) {
-        if (Math.abs(index - current) > CACHE_RADIUS) {
+        if (Math.abs(index - center) > CACHE_RADIUS) {
           entry.img.onload = null
           entry.img.onerror = null
           images.delete(index)
@@ -108,11 +149,22 @@ export default function BookingSequence() {
       if (alive && current !== target) renderToTarget()
     }
 
-    const requestFrame = (i) => {
+    const requestFrameQueued = (i) => {
       target = Math.max(0, Math.min(FRAME_COUNT - 1, i))
       preloadAroundCurrent()
       renderToTarget()
     }
+
+    const requestFrameImmediate = (i) => {
+      requested = Math.max(0, Math.min(FRAME_COUNT - 1, i))
+      target = requested
+      load(requested)
+      drawNearest(requested)
+      preloadAroundCurrent()
+      trimCache()
+    }
+
+    const requestFrame = mobile ? requestFrameImmediate : requestFrameQueued
 
     // Warm the compressed browser cache in exact frame order before this
     // lower-page sequence enters view. Decoded images stay in a bounded window.
@@ -151,6 +203,7 @@ export default function BookingSequence() {
 
     if (reduced) {
       target = Math.floor(FRAME_COUNT * 0.55)
+      requested = target
       load(target).then(() => draw(target))
       return () => {
         alive = false
@@ -171,7 +224,7 @@ export default function BookingSequence() {
           trigger: section,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.35,
+          scrub: mobile ? 0.2 : 0.35,
           invalidateOnRefresh: true,
         },
       })
